@@ -1,0 +1,313 @@
+/* div.carousel {
+  background: #000;
+  width: 500px;
+  height: 450px;
+}
+
+div.imageContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+div.images {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: calc(100% - 20px);
+}
+
+div.img {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+img.img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+button.previous {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  border-radius: 50%;
+  outline: none;
+  border: none;
+  background: #fff;
+}
+
+button.next {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  border-radius: 50%;
+  outline: none;
+  border: none;
+  background: #fff;
+  right: 0;
+} */
+
+div.container {
+  position: relative;
+  /* padding: 10px 10px 25px 10px; */
+  border-radius: 15px;
+  /* background: #111111; */
+  /* border: 2px solid;
+  border-color: orange; */
+
+  /* border-image: linear-gradient(white, orange, #fff) 100; */
+
+  box-shadow: 0 0 10px #00000030;
+  transition: 200ms;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  display: inline-block;
+}
+
+/* smooth */
+
+div.image-container {
+  width: calc(300% + 20px);
+  /* 20px = 2 * container's padding, 300% = number of children * 100 */
+  position: relative;
+  height: calc(100% - 15px);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 0;
+  transition: 200ms ease-in-out;
+  scroll-behavior: smooth;
+  border-radius: 10px;
+}
+
+div.img {
+  border-radius: 10px;
+  width: 100%;
+  /* height: 100%; */
+  /* background: #ffffff1e; */
+  overflow: hidden;
+}
+
+div.img img {
+  object-fit: contain;
+  width: 100%;
+  /* height: 100%; */
+}
+
+button.previous,
+button.next {
+  position: absolute;
+  background: transparent;
+  text-shadow: 0 0 10px #ffffff;
+  font-size: 2.5em;
+  font-weight: bold;
+  border: none;
+  top: 50%;
+  transform: translateY(-50%);
+  outline: none;
+  color: #353535;
+  width: 57px;
+  height: 72px;
+  cursor: pointer;
+  transition: 200ms;
+  /* box-shadow: 3px 3px 3px #44444444; */
+  border-radius: 50%;
+}
+
+div.container button:hover {
+  transform: scale(1.1) translateY(-49%);
+}
+
+/* button.previous{
+  border-radius: 0 20px 20px 0;
+} */
+button.previous {
+  left: 13px;
+}
+
+button.next {
+  /* border-radius: 20px 0 0 20px; */
+  right: 13px;
+}
+
+div.labels {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  position: relative;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: fit-content;
+}
+
+div.label {
+  width: 8px;
+  height: 8px;
+  border-radius: 5px;
+  background: #202020;
+  cursor: pointer;
+  transition: 150ms;
+}
+
+div.label:hover {
+  transform: scale(1.2);
+}
+
+div.preview {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #000000b2;
+  z-index: 10000;
+  top: 100%;
+  transition: 400ms;
+  display: flex;
+
+}
+
+img.preview-img {
+  width: 88%;
+  height: 80%;
+  object-fit: contain;
+  position: absolute;
+  transition: 400ms;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  display: flex;
+  align-items: center;
+}
+
+div.preview-container {
+  background: #000000be;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 100%;
+  left: 0;
+  /* background: linear-gradient(to bottom right, var(--prim-gold), var(--prim-red)); */
+  transition: 200ms;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  z-index: 10000;
+  transform: rotateX(90deg);
+  align-items: center;
+  display: inline-block;
+}
+
+div.preview-image-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  transition: 200ms ease-in-out;
+  scroll-behavior: smooth;
+  align-items: center;
+
+}
+
+div.preview-img {
+  width: 100%;
+  height: 100%;
+  /* background: #ffffff1e; */
+  overflow: hidden;
+}
+
+div.preview-img img {
+  /* width: calc(100vw - 20px);
+  height: calc(100vh - 10px); */
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+button.preview-previous,
+button.preview-next {
+  position: absolute;
+  /* background: #fff; */
+  background: #00000070;
+  font-size: 1em;
+  border: none;
+  top: 50%;
+  transform: translateY(-50%);
+  outline: none;
+  /* color: #444; */
+  color: white;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: 200ms;
+  box-shadow: 3px 3px 3px #44444444;
+  border-radius: 50%;
+}
+
+div.preview-container button:not(button.close):hover {
+  transform: scale(1.1) translateY(-49%);
+}
+
+button.preview-next {
+  right: 10px;
+}
+
+div.preview-labels {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  position: relative;
+  left: 50%;
+  top: -20px;
+  transform: translateX(-50%);
+  width: fit-content;
+}
+
+div.preview-label {
+  width: 8px;
+  height: 8px;
+  border-radius: 5px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: 150ms;
+  border: 1px solid #9a9a9a;
+}
+
+div.preview-label:hover {
+  transform: scale(1.2);
+}
+
+button.close {
+  position: absolute;
+  font-size: 1.8em;
+  font-weight: bold;
+  color: white;
+  background: #00000090;
+  border-radius: 50%;
+  right: 15px;
+  top: 10px;
+  cursor: pointer;
+  display: inline-block;
+  z-index: 10001;
+  border: none;
+  outline: none;
+  width: 1.9em;
+  height: 1.9em;
+  transition: 100ms;
+}
+
+button.close:hover {
+  background: #fff;
+  color: #444;
+}

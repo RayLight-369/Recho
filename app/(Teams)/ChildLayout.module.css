@@ -1,0 +1,4 @@
+div.child-layout {
+  display: flex;
+  flex-direction: row;
+}

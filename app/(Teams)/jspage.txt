@@ -1,0 +1,30 @@
+"use client";
+
+// import { pusherClient } from '@/lib/pusher';
+import Link from 'next/link';
+import { useEffect } from 'react';
+import useSWR from 'swr';
+
+
+const page = () => {
+
+  // useEffect( () => {
+  //   pusherClient.subscribe( "rand" );
+  //   pusherClient.bind( "click", () => console.log( "clicked something..." ) );
+
+  //   return () => {
+
+  //     pusherClient.unsubscribe( "rand" );
+  //     pusherClient.unbind( "click", () => console.log( "clicked something..." ) );
+
+  //   };
+  // }, [] );
+  return (
+    <div>
+      <h1>Page 1</h1>
+      <Link href={ "/12" }>P2</Link>
+    </div>
+  );
+};
+
+export default page;

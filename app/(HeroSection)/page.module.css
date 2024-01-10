@@ -1,0 +1,122 @@
+main.main {
+  width: 100vw;
+  height: 100vh;
+  background: #050011 url("/Imgs/bg.png") no-repeat fixed;
+  background-size: cover;
+}
+
+div.overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url("/Imgs/bg.png") no-repeat fixed;
+  background-size: cover;
+  z-index: 0;
+}
+
+header.header {
+  width: 100vw;
+  padding: 10px 40px;
+  display: flex;
+  position: absolute;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+div.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: alata;
+  color: white;
+  gap: 7px;
+}
+
+nav.nav {
+  display: flex;
+  flex-direction: row;
+  font-family: alata;
+}
+
+nav.nav button {
+  background: none;
+  padding: 8px;
+  color: #B265FF;
+  border: none;
+  font-size: 16px;
+  outline: none;
+  position: relative;
+  font-family: alata;
+  text-shadow: 0px 0px 21.6px #9466C2;
+}
+
+nav.nav button::before {
+  content: '';
+  position: absolute;
+  left: -15px;
+  top: calc(50% - .75px);
+  width: 15px;
+  height: 1.5px;
+  background: #B265FF;
+}
+
+div.punchline {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  width: 737.5px;
+  height: fit-content;
+  align-items: center;
+  justify-content: center;
+}
+
+div.punchline::before {
+  content: "";
+  top: -30px;
+  position: absolute;
+  left: 10px;
+  width: 100px;
+  height: 50px;
+  height: 157px;
+  border-radius: 100px;
+  background: #A859F7;
+  filter: blur(88px);
+}
+
+div.punchline p.title {
+  text-align: center;
+  font-family: Alata;
+  font-size: 55px;
+  font-style: normal;
+  line-height: 139%;
+  background: linear-gradient(90deg, #FFF 23.39%, #BA84FF 64.56%, #FF008A 115.08%);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* 125.1px */
+}
+
+div.punchline div.buttons {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
+}
+
+div.punchline div.buttons button {
+  width: 25%;
+  padding: 15px 8px;
+  filter: drop-shadow(0px 0px 12.6px rgba(168, 89, 247, 0.53));
+  border-radius: 50px;
+  background: #B159F7;
+  border: none;
+  outline: none;
+  font-family: abeezee;
+}

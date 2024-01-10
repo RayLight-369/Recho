@@ -1,0 +1,11 @@
+account creation
+
+organization creation / joining    <if joining then also create links for invite>
+
+admin uploads [tasks to be done] / [bugs to be fixed]
+
+(tasks) will have a title, description, upload date, due date, [[done, fixed], pending]
+
+admin can set the priority of task / bug
+
+members can mark the task as [done, fixed]
