@@ -33,13 +33,17 @@ const page = () => {
             <p className={ styles.title }>Recho</p>
           </div>
           <nav className={ styles.nav }>
-            <button onClick={ async () => {
-              if ( session.signedIn ) {
-                signIn( "google" );
-              } else {
+            { session?.signedIn ? (
+              <button onClick={ async () => {
                 signOut();
-              }
-            } }>{ session?.signedIn ? "LogOut" : "Login" }</button>
+              } }>LogOut</button>
+            ) : (
+              <button onClick={ async () => {
+                signIn( "google", {
+                  callbackUrl: "/protected"
+                } );
+              } }>Login</button>
+            ) }
           </nav>
         </header>
         <div className={ styles.punchline }>
@@ -50,7 +54,7 @@ const page = () => {
               damping: 7,
             } }>
               <motion.button type='button' whileHover={ hover } onClick={ async () => {
-                if ( session.signedIn ) {
+                if ( !session.signedIn ) {
                   signIn( "google", {
                     callbackUrl: "/dashboard"
                   } );

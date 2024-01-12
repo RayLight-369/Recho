@@ -1,4 +1,32 @@
 div.child-layout {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  background: #DCDCDC;
+  gap: 1px;
+  grid-template-areas:
+    "sidebar header header"
+    "sidebar page page"
+    "sidebar page page";
+  grid-template-rows: 55px auto auto;
+  grid-template-columns: minmax(200px, 18vw) auto auto;
+}
+
+div.child-layout > * {
+  background: #FFFFFF;
+}
+
+section.page {
+  grid-area: page;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+}
+
+.header {
+  grid-area: header;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  overflow: hidden;
 }

@@ -1,0 +1,20 @@
+div.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000000e1;
+  z-index: 99999999;
+  overflow: hidden;
+}
+
+div.modal {
+  padding: 20px;
+  min-height: fit-content;
+  max-height: 90%;
+  width: fit-content;
+}

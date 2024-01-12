@@ -1,0 +1,25 @@
+div.sidebar {
+  height: 100vh;
+  background: #e7e7e7;
+}
+
+div.logo {
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding: 10px 12px; */
+}
+
+div.sidebar div.logo div.icon-name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  left: -30px;
+  position: relative;
+  font-family: righteous;
+  font-size: 18px;
+  color: #763cb0;
+  /* background: #000; */
+}

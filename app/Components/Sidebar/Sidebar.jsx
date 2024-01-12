@@ -4,7 +4,7 @@ import React from 'react';
 import styles from "./Sidebar.module.css";
 import Image from 'next/image';
 
-const Sidebar = () => {
+const Sidebar = ( { className } ) => {
 
   let teams = [ "aSxCd1S", "bSxVd1F" ];
   // let channels = {
@@ -12,13 +12,13 @@ const Sidebar = () => {
   // };
 
   return (
-    <div className={ styles.sidebar }>
+    <div className={ `${ styles.sidebar } ${ className && className }` }>
       <div className={ styles.logo }>
         <div className={ styles[ "icon-name" ] }>
           <Image
             src={ "/Imgs/logo.svg" }
-            width={ 40 }
-            height={ 40 }
+            width={ 50 }
+            height={ 50 }
           />
           <p className={ styles.title }>Recho</p>
         </div>

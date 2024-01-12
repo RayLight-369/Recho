@@ -107,6 +107,34 @@ export const updateData = async ( {
 
 };
 
+export const updateTeamsData = async ( {
+  table,
+  object,
+  where
+} ) => {
+
+  try {
+
+    const { data, error } = await supabase
+      .from( table )
+      .update( object )
+      .match( where )
+      .select();
+
+    if ( data && data.length ) return data;
+    if ( error ) console.log( error );
+
+    return false;
+
+  } catch ( error ) {
+
+    console.log( error );
+    return false;
+
+  }
+
+};
+
 export const exists = async ( {
   table,
   where,
