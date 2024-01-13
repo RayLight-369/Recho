@@ -30,7 +30,7 @@ const CreateTeam = ( { handleClose } ) => {
     try {
 
       const teamsData = session.sessionData.currentUserData.current_user_teams_data;
-      console.log( teamsData );
+      console.log( "previous teamsData ", teamsData ); //supabase mein data update karne ke baad yahan update nhi ho raha data
 
       const response = await fetch( "/api/team/create", {
         method: "POST",
@@ -45,7 +45,10 @@ const CreateTeam = ( { handleClose } ) => {
       } );
 
       if ( response.ok ) {
-        console.log( await response.json() );
+        const DATA = await response.json();
+        console.log( DATA );
+        const new_teamsData = DATA.userData[ 0 ].teamsData;
+        console.log( "new teams Data, ", new_teamsData );
       }
 
     } catch ( e ) {

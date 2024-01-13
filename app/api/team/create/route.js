@@ -1,4 +1,4 @@
-import { getData, insertData, updateTeamsData } from "@/app/Supabase/Supabase";
+import { getData, insertData, updateData } from "@/app/Supabase/Supabase";
 
 export const POST = async ( req, res ) => {
   try {
@@ -8,10 +8,19 @@ export const POST = async ( req, res ) => {
     console.log( "body ", body );
     // return;
 
+    let TaskResponse = await insertData( {
+      table: "Tasks",
+      object: {
+        title: "Upload a Task on Recho.",
+        description: "upload a task on Recho..."
+      }
+    } );
+
     let channelResponse = await insertData( {
       table: "Channels",
       object: {
-        name: "general"
+        name: "general",
+        tasks_ids: [ TaskResponse.data[ 0 ].id ]
       }
     } );
 
@@ -28,7 +37,7 @@ export const POST = async ( req, res ) => {
     let TeamData = response.data[ 0 ];
     body.teamsData.push( { "id": TeamData.id, "role": "owner", "settings": { "color": "Light" } } );
 
-    let userData = await updateTeamsData( {
+    let userData = await updateData( {
       table: "Users",
       where: {
         email: body?.userEmail
@@ -36,7 +45,7 @@ export const POST = async ( req, res ) => {
       object: {
         teamsData: body.teamsData
       }
-    } ).then( console.log );
+    } );
 
     return new Response( JSON.stringify( { data: TeamData, userData } ), { status: 201 } );
 

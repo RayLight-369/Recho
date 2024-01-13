@@ -92,7 +92,8 @@ export const updateData = async ( {
     let Data = await supabase
       .from( table )
       .update( object )
-      .match( where );
+      .match( where )
+      .select();
 
 
     return Data.data;
@@ -107,33 +108,33 @@ export const updateData = async ( {
 
 };
 
-export const updateTeamsData = async ( {
-  table,
-  object,
-  where
-} ) => {
+// export const updateTeamsData = async ( {
+//   table,
+//   object,
+//   where
+// } ) => {
 
-  try {
+//   try {
 
-    const { data, error } = await supabase
-      .from( table )
-      .update( object )
-      .match( where )
-      .select();
+//     const { data, error } = await supabase
+//       .from( table )
+//       .update( object )
+//       .match( where )
+//       .select();
 
-    if ( data && data.length ) return data;
-    if ( error ) console.log( error );
+//     if ( data && data.length ) return data;
+//     if ( error ) console.log( error );
 
-    return false;
+//     return false;
 
-  } catch ( error ) {
+//   } catch ( error ) {
 
-    console.log( error );
-    return false;
+//     console.log( error );
+//     return false;
 
-  }
+//   }
 
-};
+// };
 
 export const exists = async ( {
   table,
@@ -160,60 +161,60 @@ export const exists = async ( {
   return false;
 };
 
-export const search = async ( { table, colums, query, filter, range, orderBy = {
-  property: 'id',
-  ascending: false
-} } ) => {
+// export const search = async ( { table, columns, query, filter, range, orderBy = {
+//   property: 'id',
+//   ascending: false
+// } } ) => {
 
-  try {
+//   try {
 
-    let formattedQuery = query.split( ' ' ).join( "%" );
+//     let formattedQuery = query.split( ' ' ).join( "%" );
 
-    let formattedString = colums.map( col => `${ col }.ilike.%${ formattedQuery }%` ).join( ", " );
+//     let formattedString = columns.map( col => `${ col }.ilike.%${ formattedQuery }%` ).join( ", " );
 
-    const Data = supabase.
-      from( table )
-      .select()
-      .or( formattedString )
-      .order( orderBy.property, { ascending: orderBy.ascending } );
+//     const Data = supabase.
+//       from( table )
+//       .select()
+//       .or( formattedString )
+//       .order( orderBy.property, { ascending: orderBy.ascending } );
 
-    if ( range && range.length == 2 ) {
-      Data.range( range[ 0 ], range[ 1 ] );
-    }
+//     if ( range && range.length == 2 ) {
+//       Data.range( range[ 0 ], range[ 1 ] );
+//     }
 
-    const { data, error } = await Data;
+//     const { data, error } = await Data;
 
-    if ( filter && filter != "relevance" ) {
-      return data;
-    }
+//     if ( filter && filter != "relevance" ) {
+//       return data;
+//     }
 
-    const resultArray = data.map( item => {
+//     const resultArray = data.map( item => {
 
-      let formattedArray = query.split( " " );
+//       let formattedArray = query.split( " " );
 
-      const titleScore = item.title.toLowerCase().replaceAll( "\n", " " ).split( " " ).filter( value => formattedArray.includes( value ) ).length * 3;
-      const descriptionScore = item.description.toLowerCase().replaceAll( "\n", " " ).split( " " ).filter( value => formattedArray.includes( value ) ).length * 2;
-      const tagsScore = item.tags.replaceAll( "#", "" ).split( " " ).filter( value => formattedArray.includes( value ) ).length;
+//       const titleScore = item.title.toLowerCase().replaceAll( "\n", " " ).split( " " ).filter( value => formattedArray.includes( value ) ).length * 3;
+//       const descriptionScore = item.description.toLowerCase().replaceAll( "\n", " " ).split( " " ).filter( value => formattedArray.includes( value ) ).length * 2;
+//       const tagsScore = item.tags.replaceAll( "#", "" ).split( " " ).filter( value => formattedArray.includes( value ) ).length;
 
-      const score = titleScore + descriptionScore + tagsScore;
+//       const score = titleScore + descriptionScore + tagsScore;
 
-      return {
-        ...item,
-        score,
-      };
-    } ).sort( ( a, b ) => b.score - a.score );
+//       return {
+//         ...item,
+//         score,
+//       };
+//     } ).sort( ( a, b ) => b.score - a.score );
 
-    if ( resultArray.length ) {
-      return resultArray;
-    }
+//     if ( resultArray.length ) {
+//       return resultArray;
+//     }
 
-  } catch ( e ) {
+//   } catch ( e ) {
 
-    console.log( e );
+//     console.log( e );
 
-  }
+//   }
 
-};
+// };
 
 export const deleteData = async ( {
   table,
@@ -312,13 +313,18 @@ export async function getTeamsData ( { email } ) {
             let this_channel_data = channelsData.data;
             let tasks_data = this_channel_data.map( async ( channel ) => {
 
-              let Tasks = await supabase
-                .from( "Tasks" )
-                .select()
-                .in( "id", channel.tasks_ids.map( task => parseInt( task ) ) );
+              if ( channel.tasks_ids?.length ) {
 
-              channel.tasks = Tasks.data;
-              delete channel.tasks_ids;
+                let Tasks = await supabase
+                  .from( "Tasks" )
+                  .select()
+                  .in( "id", channel.tasks_ids.map( task => parseInt( task ) ) );
+
+                channel.tasks = Tasks.data;
+                delete channel.tasks_ids;
+
+              }
+
               return channel;
 
             } );
