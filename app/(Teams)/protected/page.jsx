@@ -11,21 +11,16 @@ const page = () => {
   const [ msg, setmsg ] = useState( "fetching your data, oops i meant your Teams Data ;)" );
 
   useEffect( () => {
-    if ( data.signedIn ) {
+    if ( "signedIn" in data && data.signedIn ) {
       if ( data?.sessionData.teamsData.length ) {
         let firstTeam = data.sessionData.teamsData[ 0 ];
         let firstChannel = firstTeam.channels[ 0 ];
-        router.replace( `/${ firstTeam.teamID }/${ firstChannel.id }` );
+        router.replace( `/teams/${ firstTeam.teamID }/${ firstChannel.id }` );
         setmsg( "redirecting..." );
       } else {
-        router.replace( "/dashboard" );
+        router.replace( "/teams/create" );
         setmsg( "redirecting..." );
       }
-    } else {
-      setmsg( "user not signed in!" );
-      clearTimeout( setTimeout( () => {
-        router.replace( "/" );
-      }, 3000 ) );
     }
   }, [ data ] );
 

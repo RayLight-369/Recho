@@ -28,7 +28,7 @@ export const POST = async ( req, res ) => {
       table: "Teams",
       object: {
         name: body.teamName,
-        members: [ [ body.userName, body.userRole ] ],
+        members: [ [ body.userId, body.userRole ] ],
         channel_ids: [ [ channelResponse.data[ 0 ].id, channelResponse.data[ 0 ].name ] ],
         created_at: `${ currentDate.getDate() }-${ currentDate.toLocaleString( 'default', { month: 'long' } ).substring( 0, 3 ) } ${ currentDate.getFullYear() }`,
       }

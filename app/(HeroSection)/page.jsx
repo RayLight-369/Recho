@@ -54,12 +54,13 @@ const page = () => {
               damping: 7,
             } }>
               <motion.button type='button' whileHover={ hover } onClick={ async () => {
+                console.log( session );
                 if ( !session.signedIn ) {
                   signIn( "google", {
-                    callbackUrl: "/dashboard"
+                    callbackUrl: "/protected"
                   } );
                 } else {
-                  router.push( "/dashboard" );
+                  router.push( "/protected" );
                 }
               } }>Try for free</motion.button>
               <motion.button disabled type='button' whileHover={ hover }>About Me</motion.button>

@@ -39,6 +39,7 @@ const CreateTeam = ( { handleClose } ) => {
           teamName,
           teamDescription,
           userName: session.user.name,
+          userId: session.user.id,
           userRole: "owner",
           userEmail: session.user.email,
           teamsData
@@ -50,8 +51,9 @@ const CreateTeam = ( { handleClose } ) => {
         console.log( DATA );
         const new_teamsData = DATA.userData[ 0 ].teamsData;
         console.log( "new teams Data, ", new_teamsData );
-        // setData( prev => ( { ...prev, } ) );
-        set_data_after_creating_new_team( session.user.email, setData );
+        set_data_after_creating_new_team( session.user.email, setData ).then( () => {
+          router.push( `/${ DATA.data.id }/${ DATA.data.channel_ids[ 0 ][ 0 ] }` );
+        } );
       }
 
     } catch ( e ) {
