@@ -3,6 +3,7 @@ import styles from "./CreateTeam.module.css";
 import { MotionConfig, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useData } from '@/app/Contexts/DataContext/DataContext';
+import { set_data_after_creating_new_team } from '@/app/utils/setStates';
 
 
 const CreateTeam = ( { handleClose } ) => {
@@ -10,7 +11,7 @@ const CreateTeam = ( { handleClose } ) => {
   const router = useRouter();
   const [ teamName, setTeamName ] = useState( "" );
   const [ teamDescription, setTeamDescription ] = useState( "" );
-  const { data: session } = useData();
+  const { data: session, setData } = useData();
 
   const buttonWhileHovering = ( scale = 1.1, duration = .1 ) => ( {
     scale,
@@ -30,7 +31,7 @@ const CreateTeam = ( { handleClose } ) => {
     try {
 
       const teamsData = session.sessionData.currentUserData.current_user_teams_data;
-      console.log( "previous teamsData ", teamsData ); //supabase mein data update karne ke baad yahan update nhi ho raha data
+      console.log( "previous sessionData ", session ); //supabase mein data update karne ke baad yahan update nhi ho raha data
 
       const response = await fetch( "/api/team/create", {
         method: "POST",
@@ -49,6 +50,8 @@ const CreateTeam = ( { handleClose } ) => {
         console.log( DATA );
         const new_teamsData = DATA.userData[ 0 ].teamsData;
         console.log( "new teams Data, ", new_teamsData );
+        // setData( prev => ( { ...prev, } ) );
+        set_data_after_creating_new_team( session.user.email, setData );
       }
 
     } catch ( e ) {
