@@ -18,7 +18,7 @@ const page = () => {
         let firstChannel = firstTeam.channels[ 0 ];
         router.prefetch( `/teams/${ firstTeam.teamID }/${ firstChannel.id }` );
         let [ team, channel ] = navigateTo( data.sessionData, { teamId: firstTeam.teamID, channelId: firstChannel.id, setCurrentChannel, setCurrentTeam } );
-        router.replace( `/teams/${ team }/${ channel }` );
+        router.push( `/teams/${ team }/${ channel }` );
         setmsg( "redirecting..." );
       } else {
         router.replace( "/teams/create" );

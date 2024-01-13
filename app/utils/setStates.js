@@ -7,7 +7,7 @@ export const set_data_after_creating_new_team = async ( email, setData, updatedD
 };
 
 export const setCurrentTeamChannel = async ( { teamId, channelId, sessionData, setCurrentTeam, setCurrentChannel } ) => {
-  console.log( 1 );
+  // console.log( 1 );
   try {
     const selectedTeam = sessionData?.teamsData.find( ( team ) => team.teamID == teamId );
     const selectedChannel = selectedTeam?.channels.find( ( channel ) => channel.id == channelId );
