@@ -4,6 +4,7 @@ import { MotionConfig, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useData } from '@/app/Contexts/DataContext/DataContext';
 import { set_data_after_creating_new_team } from '@/app/utils/setStates';
+import { navigateTo } from '@/app/utils/changePage';
 
 
 const CreateTeam = ( { handleClose } ) => {
@@ -11,7 +12,8 @@ const CreateTeam = ( { handleClose } ) => {
   const router = useRouter();
   const [ teamName, setTeamName ] = useState( "" );
   const [ teamDescription, setTeamDescription ] = useState( "" );
-  const { data: session, setData } = useData();
+  const { data: session, setData, setCurrentTeam, setCurrentChannel } = useData();
+  const [ creating, setCreating ] = useState( false );
 
   const buttonWhileHovering = ( scale = 1.1, duration = .1 ) => ( {
     scale,
@@ -25,8 +27,9 @@ const CreateTeam = ( { handleClose } ) => {
   // };
 
   async function createTeam () {
-
+    // navigateTo( session );
     if ( !teamName.trim().length ) return;
+    setCreating( true );
 
     try {
 
@@ -51,13 +54,25 @@ const CreateTeam = ( { handleClose } ) => {
         console.log( DATA );
         const new_teamsData = DATA.userData[ 0 ].teamsData;
         console.log( "new teams Data, ", new_teamsData );
-        set_data_after_creating_new_team( session.user.email, setData ).then( () => {
-          router.push( `/${ DATA.data.id }/${ DATA.data.channel_ids[ 0 ][ 0 ] }` );
+
+        set_data_after_creating_new_team( session.user.email, setData ).then( ( { sessionData } ) => {
+          router.prefetch( `/teams/${ DATA.data.id }/${ DATA.data.channel_ids[ 0 ][ 0 ] }` );
+
+          const [ team, channel ] = navigateTo( sessionData, {
+            teamId: DATA.data.id,
+            channelId: DATA.data.channel_ids[ 0 ][ 0 ],
+            setCurrentTeam,
+            setCurrentChannel
+          } );
+
+          router.push( `/teams/${ team }/${ channel }` );
         } );
       }
 
     } catch ( e ) {
       console.log( e );
+    } finally {
+      setCreating( false );
     }
   }
 
@@ -77,8 +92,9 @@ const CreateTeam = ( { handleClose } ) => {
             whileHover={ buttonWhileHovering( 1.1, .2 ) }
             className={ styles[ "create-button" ] }
             onClick={ createTeam }
+            disabled={ creating }
           >
-            Create
+            { creating ? "Creating..." : "Create" }
           </motion.button>
           <motion.button
             whileHover={ buttonWhileHovering( 1.1, .2 ) }

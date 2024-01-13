@@ -4,13 +4,11 @@ import React from 'react';
 import styles from "./Sidebar.module.css";
 import Image from 'next/image';
 import { AnimatePresence } from 'framer-motion';
+import { useData } from '@/app/Contexts/DataContext/DataContext';
 
 const Sidebar = ( { className } ) => {
 
-  let teams = [ "aSxCd1S", "bSxVd1F" ];
-  // let channels = {
-
-  // };
+  const { currentChannel, currentTeam } = useData();
 
   let variants = {
     hidden: {
@@ -50,6 +48,11 @@ const Sidebar = ( { className } ) => {
             />
             <p className={ styles.title }>Recho</p>
           </div>
+        </div>
+        <div className={ styles[ "channels" ] }>
+          { currentTeam?.channels.map( channel => (
+            <p key={ channel.id }>{ channel.name }</p>
+          ) ) }
         </div>
       </div>
     </AnimatePresence>

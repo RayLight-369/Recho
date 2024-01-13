@@ -313,7 +313,7 @@ export async function getTeamsData ( { email } ) {
             let this_channel_data = channelsData.data;
             let tasks_data = this_channel_data.map( async ( channel ) => {
 
-              if ( channel.tasks_ids?.length ) {
+              if ( channel?.tasks_ids?.length ) {
 
                 let Tasks = await supabase
                   .from( "Tasks" )
@@ -354,7 +354,7 @@ export async function getTeamsData ( { email } ) {
       };
     }
 
-    return {};
+    return null;
 
   } catch ( error ) {
     console.error( error );
