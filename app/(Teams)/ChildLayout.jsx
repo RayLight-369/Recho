@@ -1,12 +1,17 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Sidebar from "../Components/Sidebar/Sidebar";
 import styles from "./ChildLayout.module.css";
 import Header from '../Components/Header/Header';
 import { AnimatePresence, motion } from 'framer-motion';
+import { setCurrentTeamChannel } from '../utils/setStates';
+import { useData } from '../Contexts/DataContext/DataContext';
+import PageWrapper from '../Components/PageWrapper/PageWrapper';
 
 const ChildLayout = ( { children } ) => {
+
+  const { setCurrentTeam, setCurrentChannel, data } = useData();
 
   let variants = {
     hidden: {
@@ -23,13 +28,16 @@ const ChildLayout = ( { children } ) => {
     },
   };
 
+
   return (
     // <AnimatePresence mode='wait'>
     <div className={ styles[ 'child-layout' ] }>
       <Sidebar className={ styles.sidebar } />
       <Header className={ styles.header } />
       <section className={ styles.page } variants={ variants } transition={ { delay: .7 } } animate="animate" initial="hidden" exit="exit">
-        { children }
+        <PageWrapper>
+          { children }
+        </PageWrapper>
       </section>
     </div>
     // </AnimatePresence>

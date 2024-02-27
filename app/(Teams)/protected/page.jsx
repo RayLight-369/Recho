@@ -14,15 +14,20 @@ const page = () => {
   useEffect( () => {
     if ( "signedIn" in data && data.signedIn ) {
       if ( data?.sessionData.teamsData.length ) {
+
         let firstTeam = data.sessionData.teamsData[ 0 ];
         let firstChannel = firstTeam.channels[ 0 ];
+
         router.prefetch( `/teams/${ firstTeam.teamID }/${ firstChannel.id }` );
-        let [ team, channel ] = navigateTo( data.sessionData, { teamId: firstTeam.teamID, channelId: firstChannel.id, setCurrentChannel, setCurrentTeam } );
-        router.push( `/teams/${ team }/${ channel }` );
-        setmsg( "redirecting..." );
+
+        navigateTo( data.sessionData, { teamId: firstTeam.teamID, channelId: firstChannel.id, setCurrentChannel, setCurrentTeam } ).then( ( [ team, channel ] ) => {
+          setmsg( "redirecting..." );
+          router.push( `/teams/${ team }/${ channel }` );
+        } );
+
       } else {
-        router.replace( "/teams/create" );
         setmsg( "redirecting..." );
+        router.replace( "/teams/create" );
       }
     }
   }, [ data ] );

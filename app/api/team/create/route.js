@@ -40,7 +40,7 @@ export const POST = async ( req, res ) => {
     let userData = await updateData( {
       table: "Users",
       where: {
-        email: body?.userEmail
+        email: body.userEmail
       },
       object: {
         teamsData: body.teamsData

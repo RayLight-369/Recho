@@ -34,7 +34,7 @@ const PageWrapper = ( { children } ) => {
         animate="visible"
         exit="exit"
         transition={ {
-          duration: .7,
+          duration: .5,
         } }
       >
         { children }

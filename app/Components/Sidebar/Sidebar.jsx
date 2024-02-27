@@ -1,10 +1,11 @@
 "use client";
 
-import React from 'react';
+import React, { memo } from 'react';
 import styles from "./Sidebar.module.css";
 import Image from 'next/image';
 import { AnimatePresence } from 'framer-motion';
 import { useData } from '@/app/Contexts/DataContext/DataContext';
+import Link from 'next/link';
 
 const Sidebar = ( { className } ) => {
 
@@ -29,34 +30,34 @@ const Sidebar = ( { className } ) => {
   };
 
   return (
-    <AnimatePresence
-      variants={ variants }
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      transition={ {
-        duration: .7
-      } }
-    >
-      <div className={ `${ styles.sidebar } ${ className && className }` }>
-        <div className={ styles.logo }>
-          <div className={ styles[ "icon-name" ] }>
-            <Image
-              src={ "/Imgs/logo.svg" }
-              width={ 50 }
-              height={ 50 }
-            />
-            <p className={ styles.title }>Recho</p>
-          </div>
-        </div>
-        <div className={ styles[ "channels" ] }>
-          { currentTeam?.channels.map( channel => (
-            <p key={ channel.id }>{ channel.name }</p>
-          ) ) }
+    // <AnimatePresence
+    //   variants={ variants }
+    //   initial="hidden"
+    //   animate="visible"
+    //   exit="exit"
+    //   transition={ {
+    //     duration: .7
+    //   } }
+    // >
+    <div className={ `${ styles.sidebar } ${ className && className }` }>
+      <div className={ styles.logo }>
+        <div className={ styles[ "icon-name" ] }>
+          <Image
+            src={ "/Imgs/logo.svg" }
+            width={ 50 }
+            height={ 50 }
+          />
+          <p className={ styles.title }>Recho</p>
         </div>
       </div>
-    </AnimatePresence>
+      <div className={ styles[ "channels" ] }>
+        { currentTeam?.channels.map( channel => (
+          <Link href={ `/teams/${ currentTeam.teamID }/${ channel.id }` } key={ channel.id } id={ channel.id == currentChannel.id && styles[ "currentChannel" ] }>{ channel.name }</Link>
+        ) ) }
+      </div>
+    </div>
+    // </AnimatePresence>
   );
 };
 
-export default Sidebar;
+export default memo( Sidebar );

@@ -15,17 +15,17 @@ export default function RootLayout ( { children } ) {
         <Provider >
           <ThemeProvider>
             {/* <AnimatePresence mode='wait'> */ }
-            <PageWrapper>
-              <DataProvider>
-                <IsMobileProvider>
-                  <ToggleNavProvider>
-                    <ChildLayout>
-                      { children }
-                    </ChildLayout>
-                  </ToggleNavProvider>
-                </IsMobileProvider>
-              </DataProvider>
-            </PageWrapper>
+            <DataProvider>
+              {/* <PageWrapper> */ }
+              <IsMobileProvider>
+                <ToggleNavProvider>
+                  <ChildLayout>
+                    { children }
+                  </ChildLayout>
+                </ToggleNavProvider>
+              </IsMobileProvider>
+              {/* </PageWrapper> */ }
+            </DataProvider>
             {/* </AnimatePresence> */ }
           </ThemeProvider>
         </Provider>
