@@ -20,10 +20,10 @@ const page = () => {
 
         router.prefetch( `/teams/${ firstTeam.teamID }/${ firstChannel.id }` );
 
-        navigateTo( data.sessionData, { teamId: firstTeam.teamID, channelId: firstChannel.id, setCurrentChannel, setCurrentTeam } ).then( ( [ team, channel ] ) => {
-          setmsg( "redirecting..." );
-          router.push( `/teams/${ team }/${ channel }` );
-        } );
+        const [ team, channel ] = navigateTo( data.sessionData, { teamId: firstTeam.teamID, channelId: firstChannel.id, setCurrentChannel, setCurrentTeam } );
+
+        setmsg( "redirecting..." );
+        router.push( `/teams/${ team }/${ channel }` );
 
       } else {
         setmsg( "redirecting..." );

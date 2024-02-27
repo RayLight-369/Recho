@@ -27,7 +27,7 @@ const PageWrapper = ( { children } ) => {
 
   return (
     <AnimatePresence mode="wait">
-      <motion.main
+      {/* <motion.main
         key={ route }
         variants={ variants }
         initial="hidden"
@@ -36,9 +36,9 @@ const PageWrapper = ( { children } ) => {
         transition={ {
           duration: .5,
         } }
-      >
-        { children }
-      </motion.main>
+      > */}
+      { children }
+      {/* </motion.main> */ }
     </AnimatePresence>
   );
 };

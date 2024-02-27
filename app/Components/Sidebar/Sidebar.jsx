@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 const Sidebar = ( { className } ) => {
 
-  const { currentChannel, currentTeam } = useData();
+  const { currentChannel, currentTeam, dataloading } = useData();
 
   let variants = {
     hidden: {
@@ -51,9 +51,14 @@ const Sidebar = ( { className } ) => {
         </div>
       </div>
       <div className={ styles[ "channels" ] }>
-        { currentTeam?.channels.map( channel => (
-          <Link href={ `/teams/${ currentTeam.teamID }/${ channel.id }` } key={ channel.id } id={ channel.id == currentChannel.id && styles[ "currentChannel" ] }>{ channel.name }</Link>
-        ) ) }
+        { dataloading ? <p>Loading...</p> : (
+          <>
+            { currentTeam?.channels.map( channel => (
+              <Link href={ `/teams/${ currentTeam.teamID }/${ channel.id }` } key={ channel.id } id={ channel.id == currentChannel.id && styles[ "currentChannel" ] }>{ channel.name }</Link>
+            ) ) }
+            <button type='button' id={ styles[ "createChannel" ] }>{ `Create Channel` }</button>
+          </>
+        ) }
       </div>
     </div>
     // </AnimatePresence>

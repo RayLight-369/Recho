@@ -58,7 +58,7 @@ const CreateTeam = ( { handleClose } ) => {
         set_data_after_creating_new_team( session.user.email, setData ).then( async ( { sessionData } ) => {
           router.prefetch( `/teams/${ DATA.data.id }/${ DATA.data.channel_ids[ 0 ][ 0 ] }` );
 
-          const [ team, channel ] = await navigateTo( sessionData, {
+          const [ team, channel ] = navigateTo( sessionData, {
             teamId: DATA.data.id,
             channelId: DATA.data.channel_ids[ 0 ][ 0 ],
             setCurrentTeam,

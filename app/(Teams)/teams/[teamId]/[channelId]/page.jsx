@@ -4,10 +4,11 @@ import { useData } from '@/app/Contexts/DataContext/DataContext';
 import { setCurrentTeamChannel } from '@/app/utils/setStates';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import Styles from "./page.module.css";
 
 const page = ( { params } ) => {
 
-  const { setCurrentTeam, setCurrentChannel, data } = useData();
+  const { setCurrentTeam, setCurrentChannel, data, currentChannel, currentTeam, dataloading } = useData();
   const router = useRouter();
 
   useEffect( () => {
@@ -23,8 +24,23 @@ const page = ( { params } ) => {
     }
   }, [ data ] );
 
+  if ( dataloading ) {
+    return <p>Loading...</p>;
+  }
+
   return (
-    <div>Welcome To Channel. Currently in Progress</div>
+    <div className={ Styles[ "channel-container" ] }>
+      <div className={ Styles[ "channel-intro" ] }>
+        <div className={ Styles[ "name-date" ] }>
+          <p className={ Styles[ "name" ] }>
+            { currentChannel?.name }
+          </p>
+          <p className={ Styles[ "date" ] }>
+            { currentChannel?.created_at }
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 

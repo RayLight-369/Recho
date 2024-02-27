@@ -32,7 +32,8 @@ div.channels {
   top: 50px;
 }
 
-div.channels > a {
+div.channels > a,
+div.channels > button {
   padding: 12px 15px 12px 28px;
   font-family: AbeeZee;
   font-size: 14px;
@@ -42,11 +43,58 @@ div.channels > a {
   width: 100%;
   height: 100%;
   text-decoration: none;
+  z-index: 1;
 }
 
-div.channels > a#currentChannel,
-div.channels > a:hover {
+div.channels > button#createChannel {
+  text-align: left;
+  border: none;
+  outline: none;
+  background: none;
+  color: #3A066D;
+  top: 50px;
+  transition: 200ms;
+  z-index: 1000;
+}
+
+/* div.channels > button#createChannel:hover {
+  color: #fefefe;
+} */
+
+/* div.channels > button#createChannel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: none;
+  transform: scaleX(0);
+  transition: 200ms;
+  z-index: -1;
+} */
+
+div.channels > button#createChannel:hover {
+  background-color: #f1e9f9;
+}
+
+div.channels > a::after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  transform-origin: left;
   background: #f1e9f9;
+  transform: scaleX(0);
+  transition: 200ms;
+  z-index: -1;
+}
+
+div.channels > a#currentChannel::after,
+div.channels > a:hover::after {
+  transform: scaleX(1);
 }
 
 div.channels > a::before {

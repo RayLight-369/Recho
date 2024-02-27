@@ -20,7 +20,8 @@ export const POST = async ( req, res ) => {
       table: "Channels",
       object: {
         name: "general",
-        tasks_ids: [ TaskResponse.data[ 0 ].id ]
+        tasks_ids: [ TaskResponse.data[ 0 ].id ],
+        created_at: `${ currentDate.getDate() }-${ currentDate.toLocaleString( 'default', { month: 'long' } ).substring( 0, 3 ) } ${ currentDate.getFullYear() }`
       }
     } );
 
