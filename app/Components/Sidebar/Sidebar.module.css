@@ -85,15 +85,16 @@ div.channels > a::after {
   top: 0;
   height: 100%;
   width: 100%;
-  transform-origin: left;
+  transform-origin: right;
   background: #f1e9f9;
   transform: scaleX(0);
-  transition: 200ms;
+  transition: transform .24s ease-in-out;
   z-index: -1;
 }
 
 div.channels > a#currentChannel::after,
 div.channels > a:hover::after {
+  transform-origin: left;
   transform: scaleX(1);
 }
 

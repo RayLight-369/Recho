@@ -4,7 +4,8 @@ div.channel-container {
   display: flex;
   flex-direction: column;
   gap: 50px;
-  padding: 60px 40px;
+  padding: 40px 40px;
+  font-family: AbeeZee;
 }
 
 div.channel-intro {
@@ -20,15 +21,45 @@ div.name-date {
 }
 
 p.name {
-  font-size: 35px;
+  font-size: 2rem;
   font-weight: bold;
   font-family: Archivo;
   color: #232323;
 }
 
 p.date {
-  font-size: 12px;
-  font-family: Archivo;
-  font-family: AbeeZee;
+  font-size: 13px;
   color: #8a8a8a;
+}
+
+div.buttons {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+div.buttons button {
+  padding: 12px;
+  font-size: .8em;
+  border: none;
+  outline: none;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .16);
+  border-radius: 5px;
+  color: #343434;
+  font-family: Abeezee;
+  z-index: 1;
+  position: relative;
+  transition: 200ms;
+  width: 150px;
+}
+
+button#add-task {
+  box-shadow: none;
+  background: #47246a;
+  color: #fefefe;
+}
+
+div.buttons button:hover {
+  transform: scale(1.05);
 }
