@@ -19,7 +19,7 @@ export const POST = async ( req, res ) => {
     let channelResponse = await insertData( {
       table: "Channels",
       object: {
-        name: "general",
+        name: body.channelName,
         tasks_ids: [ TaskResponse.data[ 0 ].id ],
         created_at: `${ currentDate.getDate() }-${ currentDate.toLocaleString( 'default', { month: 'long' } ).substring( 0, 3 ) } ${ currentDate.getFullYear() }`
       }
