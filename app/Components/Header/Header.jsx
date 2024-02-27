@@ -4,10 +4,16 @@ import { useData } from '@/app/Contexts/DataContext/DataContext';
 
 const Header = ( { className } ) => {
 
-  const { currentTeam } = useData();
+  const { currentTeam, dataloading } = useData();
   useEffect( () => {
     console.log( "team: ", currentTeam );
   }, [ currentTeam ] );
+
+  if ( dataloading ) {
+    return <header className={ `${ className && className }` }>
+      Loading...
+    </header>;
+  }
 
   return (
     <header className={ `${ className && className }` }>

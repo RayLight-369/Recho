@@ -36,7 +36,7 @@ export const POST = async ( req, res ) => {
     } );
 
     let TeamData = response.data[ 0 ];
-    body.teamsData.push( { "id": TeamData.id, "role": "owner", "settings": { "color": "Light" } } );
+    body.teamsData.push( { "id": TeamData.id, "teamName": TeamData.name, "role": "owner", "settings": { "color": "Light" } } );
 
     let userData = await updateData( {
       table: "Users",

@@ -1,15 +1,18 @@
 "use client";
 
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import styles from "./Sidebar.module.css";
 import Image from 'next/image';
 import { AnimatePresence } from 'framer-motion';
 import { useData } from '@/app/Contexts/DataContext/DataContext';
 import Link from 'next/link';
+import Modal from '../Modal/Modal';
+import CreateChannel from '../CreateChannel/CreateChannel';
 
 const Sidebar = ( { className } ) => {
 
   const { currentChannel, currentTeam, dataloading } = useData();
+  const [ createChannelPopupOpen, setCreateChannelPopupOpen ] = useState( false );
 
   let variants = {
     hidden: {
@@ -29,39 +32,41 @@ const Sidebar = ( { className } ) => {
     }
   };
 
+  const closePopUp = ( setState ) => setState( false );
+  const openPopUp = ( setState ) => setState( true );
+
   return (
-    // <AnimatePresence
-    //   variants={ variants }
-    //   initial="hidden"
-    //   animate="visible"
-    //   exit="exit"
-    //   transition={ {
-    //     duration: .7
-    //   } }
-    // >
-    <div className={ `${ styles.sidebar } ${ className && className }` }>
-      <div className={ styles.logo }>
-        <div className={ styles[ "icon-name" ] }>
-          <Image
-            src={ "/Imgs/logo.svg" }
-            width={ 50 }
-            height={ 50 }
-          />
-          <p className={ styles.title }>Recho</p>
+    <>
+      <div className={ `${ styles.sidebar } ${ className && className }` }>
+        <div className={ styles.logo }>
+          <div className={ styles[ "icon-name" ] }>
+            <Image
+              src={ "/Imgs/logo.svg" }
+              width={ 50 }
+              height={ 50 }
+            />
+            <p className={ styles.title }>Recho</p>
+          </div>
+        </div>
+        <div className={ styles[ "channels" ] }>
+          { dataloading ? <p>Loading...</p> : (
+            <>
+              { currentTeam?.channels.map( channel => (
+                <Link href={ `/teams/${ currentTeam.teamID }/${ channel.id }` } key={ channel.id } id={ channel.id == currentChannel.id && styles[ "currentChannel" ] }>{ channel.name }</Link>
+              ) ) }
+              <button type='button' id={ styles[ "createChannel" ] } onClick={ () => openPopUp( setCreateChannelPopupOpen ) }>{ `Create Channel` }</button>
+            </>
+          ) }
         </div>
       </div>
-      <div className={ styles[ "channels" ] }>
-        { dataloading ? <p>Loading...</p> : (
-          <>
-            { currentTeam?.channels.map( channel => (
-              <Link href={ `/teams/${ currentTeam.teamID }/${ channel.id }` } key={ channel.id } id={ channel.id == currentChannel.id && styles[ "currentChannel" ] }>{ channel.name }</Link>
-            ) ) }
-            <button type='button' id={ styles[ "createChannel" ] }>{ `Create Channel` }</button>
-          </>
+      <AnimatePresence mode='wait'>
+        { createChannelPopupOpen && (
+          <Modal handleClose={ () => closePopUp( setCreateChannelPopupOpen ) }>
+            <CreateChannel handleClose={ () => closePopUp( setCreateChannelPopupOpen ) } />
+          </Modal>
         ) }
-      </div>
-    </div>
-    // </AnimatePresence>
+      </AnimatePresence>
+    </>
   );
 };
 
