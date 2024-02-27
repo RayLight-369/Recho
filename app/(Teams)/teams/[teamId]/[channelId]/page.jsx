@@ -39,6 +39,10 @@ const page = ( { params } ) => {
             { currentChannel?.created_at }
           </p>
         </div>
+        <div className={ Styles[ "buttons" ] }>
+          <button type="button">Add Member</button>
+          <button type="button">Add Task</button>
+        </div>
       </div>
     </div>
   );
