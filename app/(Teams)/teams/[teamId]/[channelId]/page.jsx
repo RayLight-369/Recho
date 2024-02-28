@@ -89,7 +89,7 @@ const page = ( { params } ) => {
           <TaskContainer />
         </div>
         <AnimatePresence mode='wait'>
-          <OptionBar setAddMemberPopupOpen={ setAddMemmberPopupOpen } setCreateChannelPopupOpen={ setCreateChannelPopupOpen } />
+          <OptionBar isAdmin={ [ "owner", "admin" ].includes( data?.sessionData.currentUserData.current_user_teams_data.find( team => team.id == currentTeam.teamID )?.role ) } setAddMemberPopupOpen={ setAddMemmberPopupOpen } setCreateChannelPopupOpen={ setCreateChannelPopupOpen } />
         </AnimatePresence>
         <AnimatePresence mode='wait'>
           { addMemmberPopupOpen && (

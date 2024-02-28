@@ -3,7 +3,7 @@ import React, { memo, useState } from 'react';
 import Styles from "./OptionBar.module.css";
 
 
-const OptionBar = ( { setCreateChannelPopupOpen, setAddMemberPopupOpen, setAddTaskPopupOpen } ) => {
+const OptionBar = ( { setCreateChannelPopupOpen, setAddMemberPopupOpen, setAddTaskPopupOpen, isAdmin } ) => {
 
   const [ openOptionBar, setOpenOptionBar ] = useState( false );
   // const [ closeOptionBarDivPosition, setCloseOptionBarDivPosition ] = useState( false );
@@ -53,10 +53,12 @@ const OptionBar = ( { setCreateChannelPopupOpen, setAddMemberPopupOpen, setAddTa
       <motion.div className={ Styles[ "minor-options" ] }>
 
       </motion.div>
-      <motion.div className={ Styles[ "major-options" ] }>
-        <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setCreateChannelPopupOpen( true ) }>+ Create Channel</button>
-        <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setAddMemberPopupOpen( true ) }>+ Add Member</button>
-      </motion.div>
+      { isAdmin && (
+        <motion.div className={ Styles[ "major-options" ] }>
+          <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setCreateChannelPopupOpen( true ) }>+ Create Channel</button>
+          <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setAddMemberPopupOpen( true ) }>+ Add Member</button>
+        </motion.div>
+      ) }
       <motion.div className={ `${ Styles[ "optionOpenClose" ] } ${ openOptionBar ? Styles[ "opened" ] : undefined }` }
         transition={ { type: "spring", stiffness: 400, damping: 10 } }
         onClick={ ( e ) => {

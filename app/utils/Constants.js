@@ -1,7 +1,7 @@
 export const STATUS = ( value ) => [
-  [ "progress", "#0035ff" ],
-  [ "approval", "#ffaa00" ],
-  [ "complete", "#00dd88" ],
+  [ "progress", "#0035ff", "rgb(236 240 255)" ],
+  [ "approval", "#ffaa00", "#fff9ed" ],
+  [ "complete", "#00dd88", "#eefff8" ],
 ][ value ];
 
 export const PRIORITY = ( value ) => [
