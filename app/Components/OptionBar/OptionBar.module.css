@@ -14,8 +14,8 @@ div.options-bar {
   overflow: hidden;
 }
 
-div.options-bar > div > p {
-  color: white;
+div.options-bar > div.optionOpenClose > p {
+  color: #fefefe;
   transition: 140ms;
 
 }
