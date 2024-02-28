@@ -18,7 +18,9 @@ const Task = ( { task } ) => {
         transition: { duration: 0.15 }
       } }
       exit={ { opacity: 0, y: 20, transition: { duration: 0.3 } } }
-      whileDrag={ { scale: 1.04 } }>
+      whileDrag={ { scale: 1.04, boxShadow: `0 0 10px rgba(0 , 0, 0, .3)` } }
+      whileHover={ { backgroundColor: `${ STATUS( task.status )[ 1 ] }10` } }
+    >
 
       <motion.p layout="position" className={ Styles[ "title" ] } >
         { task?.title.length > 50 ? task?.title.slice( 0, 37 ) + "..." : task?.title }

@@ -287,7 +287,7 @@ export async function getTeamsData ( { email } ) {
 
     if ( userData.data ) {
 
-      const { teamsData: userTeamsData } = userData.data;// id, name, email, image,
+      const { teamsData: userTeamsData, id } = userData.data;// id, name, email, image,
 
       const teamPromises = userTeamsData.map( async ( team ) => {
         const teamData = await supabase
@@ -349,7 +349,7 @@ export async function getTeamsData ( { email } ) {
 
       return {
         teamsData, currentUserData: {
-          current_user_teams_data: userTeamsData //id, name, email, image, 
+          id, current_user_teams_data: userTeamsData,
         }
       };
     }

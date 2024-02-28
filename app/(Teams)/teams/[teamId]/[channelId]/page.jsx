@@ -61,43 +61,51 @@ const page = ( { params } ) => {
     setState( true );
   };
 
-  return (
-    <>
-      <div className={ Styles[ "channel-container" ] }>
-        <div className={ Styles[ "channel-intro" ] }>
-          <div className={ Styles[ "name-date" ] }>
-            <p className={ Styles[ "name" ] }>
-              { currentChannel?.name }
-            </p>
-            <p className={ Styles[ "date" ] }>
-              { currentChannel?.created_at }
-            </p>
+  if ( currentTeam ) {
+
+    return (
+      <>
+        <div className={ Styles[ "channel-container" ] }>
+          <div className={ Styles[ "channel-intro" ] }>
+            <div className={ Styles[ "name-date" ] }>
+              <p className={ Styles[ "name" ] }>
+                { currentChannel?.name }
+              </p>
+              <p className={ Styles[ "date" ] }>
+                { currentChannel?.created_at }
+              </p>
+            </div>
+            <div className={ Styles[ "buttons" ] }>
+              <button type="button" onClick={ () => openPopUp( setCreateChannelPopupOpen ) }>Create Channel</button>
+              {/* <button type="button" onClick={ () => openPopUp( setAddMemmberPopupOpen ) }>Add Member</button> */ }
+              { data?.sessionData.currentUserData.current_user_teams_data.find( team => team.id == currentTeam.teamID )?.role == "owner" && (
+                <>
+                  <button type="button" onClick={ () => openPopUp( setAddMemmberPopupOpen ) }>Add Member</button>
+                  <button type="button" id={ Styles[ 'add-task' ] }>Add Task</button>
+                </>
+              ) }
+            </div>
           </div>
-          <div className={ Styles[ "buttons" ] }>
-            <button type="button" onClick={ () => openPopUp( setCreateChannelPopupOpen ) }>Create Channel</button>
-            <button type="button" onClick={ () => openPopUp( setAddMemmberPopupOpen ) }>Add Member</button>
-            <button type="button" id={ Styles[ 'add-task' ] }>Add Task</button>
-          </div>
+          <TaskContainer />
         </div>
-        <TaskContainer />
-      </div>
-      <AnimatePresence mode='wait'>
-        <OptionBar setAddMemberPopupOpen={ setAddMemmberPopupOpen } setCreateChannelPopupOpen={ setCreateChannelPopupOpen } />
-      </AnimatePresence>
-      <AnimatePresence mode='wait'>
-        { addMemmberPopupOpen && (
-          <Modal handleClose={ () => closePopUp( setAddMemmberPopupOpen ) }>
-            <AddMember handleClose={ () => closePopUp( setAddMemmberPopupOpen ) } />
-          </Modal>
-        ) }
-        { createChannelPopupOpen && (
-          <Modal handleClose={ () => closePopUp( setCreateChannelPopupOpen ) }>
-            <CreateChannel handleClose={ () => closePopUp( setCreateChannelPopupOpen ) } />
-          </Modal>
-        ) }
-      </AnimatePresence>
-    </>
-  );
+        <AnimatePresence mode='wait'>
+          <OptionBar setAddMemberPopupOpen={ setAddMemmberPopupOpen } setCreateChannelPopupOpen={ setCreateChannelPopupOpen } />
+        </AnimatePresence>
+        <AnimatePresence mode='wait'>
+          { addMemmberPopupOpen && (
+            <Modal handleClose={ () => closePopUp( setAddMemmberPopupOpen ) }>
+              <AddMember handleClose={ () => closePopUp( setAddMemmberPopupOpen ) } />
+            </Modal>
+          ) }
+          { createChannelPopupOpen && (
+            <Modal handleClose={ () => closePopUp( setCreateChannelPopupOpen ) }>
+              <CreateChannel handleClose={ () => closePopUp( setCreateChannelPopupOpen ) } />
+            </Modal>
+          ) }
+        </AnimatePresence>
+      </>
+    );
+  };
 };
 
 export default page;
