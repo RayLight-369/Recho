@@ -43,6 +43,7 @@
   margin: 0;
   box-sizing: border-box;
   cursor: url("/Imgs/cursor.svg"), auto;
+  font-family: AbeeZee;
 }
 
 /* ::placeholder {

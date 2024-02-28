@@ -4,7 +4,7 @@ header#header {
   padding: 0 3.5px;
 }
 
-div.teams-search div.teams select {
+div.teams-search div.teams div.select {
   height: 48px;
   width: max(100px, 100%);
   max-width: 200px;
@@ -13,11 +13,37 @@ div.teams-search div.teams select {
   border: 1px solid #cdcdcd;
   border-radius: 3px;
   outline: none;
-  -webkit-appearance: none;
-  appearance: none;
-  background: url("data:image/svg+xml;utf8,<svg fill='grey' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
-  /* background: no-repeat; */
-  background-repeat: no-repeat;
-  background-position-x: calc(100% - 4px);
-  background-position-y: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #343434;
+
+  /*
+  background: url("data:image/svg+xml;utf8,<svg fill='grey' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>"); */
+
+}
+
+p.default-team {
+  font-size: .9rem;
+}
+
+div.other-teams {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background: #dedede;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  width: 200px;
+  top: 53px;
+  gap: 1px;
+}
+
+div.other-teams a {
+  text-decoration: none;
+  color: #343434;
+  padding: 10px 14px;
+  background: #fefefe;
+  display: block;
+  font-size: .8rem;
+  position: relative;
 }
