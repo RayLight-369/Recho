@@ -20,7 +20,7 @@ div.sidebar div.logo div.icon-name {
   gap: 10px;
   left: -30px;
   position: relative;
-  font-family: righteous;
+  font-family: righteous !important;
   font-size: 18px;
   color: #763cb0;
   /* background: #000; */

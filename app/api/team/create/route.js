@@ -5,6 +5,7 @@ export const POST = async ( req, res ) => {
 
     const body = await req.json();
     const currentDate = new Date();
+    const date = `${ currentDate.getDate() }-${ currentDate.toLocaleString( 'default', { month: 'long' } ).substring( 0, 3 ) } ${ currentDate.getFullYear() }`;
     console.log( "body ", body );
     // return;
 
@@ -12,7 +13,10 @@ export const POST = async ( req, res ) => {
       table: "Tasks",
       object: {
         title: "Upload a Task on Recho.",
-        description: "upload a task on Recho..."
+        description: "upload a task on Recho...",
+        priority: 2,
+        status: 0,
+        created_at: date
       }
     } );
 
@@ -21,7 +25,7 @@ export const POST = async ( req, res ) => {
       object: {
         name: "general",
         tasks_ids: [ TaskResponse.data[ 0 ].id ],
-        created_at: `${ currentDate.getDate() }-${ currentDate.toLocaleString( 'default', { month: 'long' } ).substring( 0, 3 ) } ${ currentDate.getFullYear() }`
+        created_at: date
       }
     } );
 
@@ -31,7 +35,7 @@ export const POST = async ( req, res ) => {
         name: body.teamName,
         members: [ [ body.userId, body.userRole ] ],
         channel_ids: [ [ channelResponse.data[ 0 ].id, channelResponse.data[ 0 ].name ] ],
-        created_at: `${ currentDate.getDate() }-${ currentDate.toLocaleString( 'default', { month: 'long' } ).substring( 0, 3 ) } ${ currentDate.getFullYear() }`,
+        created_at: date,
       }
     } );
 

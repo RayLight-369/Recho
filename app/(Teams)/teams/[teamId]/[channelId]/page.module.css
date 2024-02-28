@@ -64,38 +64,3 @@ button#add-task {
 div.buttons button:hover {
   transform: scale(1.05);
 }
-
-div.options-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* width: 55%; */
-  height: 2.3rem;
-  /* padding: 12px; */
-  background: #050505;
-  border-radius: 50px;
-  position: fixed;
-  left: calc(50% + 57px);
-  transform: translateX(calc(-50% + 57px));
-  bottom: 20px;
-}
-
-div.options-bar > div > p {
-  color: white;
-  transition: 140ms;
-
-}
-
-div.options-bar > div.optionOpenClose {
-  transition: 140ms;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 5px;
-}
-
-div.options-bar > div.optionOpenClose.opened {
-  position: absolute;
-  left: calc(100% - 50px);
-  transform: translateX(0);
-}

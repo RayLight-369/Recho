@@ -17,6 +17,7 @@ const DataProvider = ( { children } ) => {
   const [ dataloading, setDataLoading ] = useState( true );
   const [ currentTeam, setCurrentTeam ] = useState( null );
   const [ currentChannel, setCurrentChannel ] = useState( null );
+  const [ currentChannelTasks, setCurrentChannelTasks ] = useState( null );
   const [ currentTask, setCurrentTask ] = useState( null );
 
   useEffect( () => {
@@ -33,7 +34,7 @@ const DataProvider = ( { children } ) => {
   }, [] );
 
   return (
-    <DataContext.Provider value={ { data, setData, dataloading, currentTeam, setCurrentTeam, currentChannel, setCurrentChannel, currentTask, setCurrentTask } }>{ children }</DataContext.Provider>
+    <DataContext.Provider value={ { data, setData, dataloading, currentTeam, setCurrentTeam, currentChannel, setCurrentChannel, currentTask, setCurrentTask, currentChannelTasks, setCurrentChannelTasks } }>{ children }</DataContext.Provider>
   );
 };
 

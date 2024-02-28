@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 const page = () => {
 
   const router = useRouter();
-  const { data, setCurrentTeam, setCurrentChannel } = useData();
+  const { data, setCurrentTeam, setCurrentChannel, setCurrentChannelTasks } = useData();
   const [ msg, setmsg ] = useState( "fetching your data, oops i meant your Teams Data ;)" );
 
   useEffect( () => {
@@ -20,7 +20,7 @@ const page = () => {
 
         router.prefetch( `/teams/${ firstTeam.teamID }/${ firstChannel.id }` );
 
-        const [ team, channel ] = navigateTo( data.sessionData, { teamId: firstTeam.teamID, channelId: firstChannel.id, setCurrentChannel, setCurrentTeam } );
+        const [ team, channel ] = navigateTo( data.sessionData, { teamId: firstTeam.teamID, channelId: firstChannel.id, setCurrentChannel, setCurrentTeam, setCurrentChannelTasks } );
 
         setmsg( "redirecting..." );
         router.push( `/teams/${ team }/${ channel }` );

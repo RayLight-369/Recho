@@ -1,0 +1,72 @@
+div.options-bar {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  /* width: 55%; */
+  height: 2.3rem;
+  /* padding: 12px; */
+  background: #050505;
+  border-radius: 50px;
+  position: fixed;
+  left: calc(50% + 57px);
+  transform: translateX(calc(-50% + 57px));
+  bottom: 20px;
+  overflow: hidden;
+}
+
+div.options-bar > div > p {
+  color: white;
+  transition: 140ms;
+
+}
+
+div.options-bar > div.optionOpenClose {
+  transition: 140ms;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.3rem;
+  width: 2.3rem;
+  border-radius: 50%;
+  z-index: 3;
+}
+
+div.options-bar > div.optionOpenClose.opened {
+  position: absolute;
+  left: calc(100% - 50px);
+  transform: translateX(0);
+}
+
+div.options-bar.opened div.major-options {
+  display: flex;
+  position: relative;
+  left: 4px;
+  gap: 8px;
+  align-items: center;
+  z-index: 1;
+  opacity: 1;
+  transition: 400ms;
+}
+
+div.options-bar div.major-options {
+  transition: 240ms;
+  opacity: 0;
+}
+
+div.major-options > button {
+  border: none;
+  outline: none;
+  padding: 8px 11px;
+  font-size: 12px;
+  border-radius: 20px;
+  width: fit-content;
+  /* background: #fefefe; */
+  background: none;
+  /* color: #121212; */
+  color: #fefefe;
+  transition: 120ms;
+}

@@ -12,7 +12,7 @@ import { setCurrentTeamChannel } from '@/app/utils/setStates';
 
 const Sidebar = ( { className } ) => {
 
-  const { currentChannel, currentTeam, dataloading, setCurrentChannel, setCurrentTeam, data } = useData();
+  const { currentChannel, currentTeam, dataloading, setCurrentChannel, setCurrentTeam, data, setCurrentChannelTasks } = useData();
   const [ createChannelPopupOpen, setCreateChannelPopupOpen ] = useState( false );
 
   let variants = {
@@ -59,9 +59,10 @@ const Sidebar = ( { className } ) => {
                     channelId: channel.id,
                     setCurrentChannel,
                     setCurrentTeam,
-                    sessionData: data.sessionData
+                    sessionData: data.sessionData,
+                    setCurrentChannelTasks
                   } );
-                } } key={ channel.id } id={ channel.id == currentChannel.id && styles[ "currentChannel" ] }>{ channel.name }</Link>
+                } } key={ channel.id } id={ channel.id == currentChannel.id ? styles[ "currentChannel" ] : undefined }>{ channel.name }</Link>
               ) ) }
               <button type='button' id={ styles[ "createChannel" ] } onClick={ () => openPopUp( setCreateChannelPopupOpen ) }>{ `Create Channel` }</button>
             </>

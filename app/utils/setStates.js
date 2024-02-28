@@ -6,7 +6,7 @@ export const set_data_after_creating_new_team = async ( email, setData, updatedD
   return { updatedData, sessionData };
 };
 
-export const setCurrentTeamChannel = ( { teamId, channelId, sessionData, setCurrentTeam, setCurrentChannel } ) => {
+export const setCurrentTeamChannel = ( { teamId, channelId, sessionData, setCurrentTeam, setCurrentChannel, setCurrentChannelTasks } ) => {
   // console.log( 1 );
   try {
     const selectedTeam = sessionData?.teamsData.find( ( team ) => team.teamID == teamId ) || sessionData?.teamsData[ 0 ];
@@ -19,6 +19,8 @@ export const setCurrentTeamChannel = ( { teamId, channelId, sessionData, setCurr
 
     if ( selectedChannel ) {
       setCurrentChannel( selectedChannel );
+      if ( setCurrentChannelTasks ) setCurrentChannelTasks( selectedChannel.tasks );
+      console.log( "selected channel: ", selectedChannel );
     }
 
     return [ selectedTeam.teamID, selectedChannel.id ];

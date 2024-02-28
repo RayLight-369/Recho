@@ -1,9 +1,7 @@
-export const STATUS = [
+export const STATUS = ( value ) => [
   "progress",
   "approval",
   "complete"
-];
+][ value ];
 
-export const PRIORITY = ( value ) => {
-  return value > 5 ? "urgent" : "normal";
-};
+export const PRIORITY = ( value ) => [ "neutral", "low", "medium", "high" ][ value ];
