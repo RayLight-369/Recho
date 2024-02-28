@@ -9,21 +9,19 @@ export const set_data_after_creating_new_team = async ( email, setData, updatedD
 export const setCurrentTeamChannel = ( { teamId, channelId, sessionData, setCurrentTeam, setCurrentChannel } ) => {
   // console.log( 1 );
   try {
-    const selectedTeam = sessionData?.teamsData.find( ( team ) => team.teamID == teamId );
-    const selectedChannel = selectedTeam?.channels.find( ( channel ) => channel.id == channelId );
+    const selectedTeam = sessionData?.teamsData.find( ( team ) => team.teamID == teamId ) || sessionData?.teamsData[ 0 ];
+    const selectedChannel = selectedTeam?.channels.find( ( channel ) => channel.id == channelId ) || selectedTeam.channels[ 0 ];
 
     if ( selectedTeam ) {
       setCurrentTeam( selectedTeam );
       console.log( "selected team: ", selectedTeam );
-    } else {
-      throw new Error( "User not part of this team" );
     }
 
     if ( selectedChannel ) {
       setCurrentChannel( selectedChannel );
-    } else {
-      setCurrentChannel( selectedTeam.channels[ 0 ] );
     }
+
+    return [ selectedTeam.teamID, selectedChannel.id ];
 
   } catch ( e ) {
     console.log( e );

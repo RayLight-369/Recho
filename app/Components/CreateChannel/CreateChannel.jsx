@@ -67,6 +67,7 @@ const CreateChannel = ( { handleClose } ) => {
           } );
 
           router.push( `/teams/${ team }/${ channel }` );
+          handleClose();
         } );
       }
 

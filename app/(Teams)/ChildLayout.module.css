@@ -1,32 +1,40 @@
 div.child-layout {
-  width: 100vw;
+  width: calc(100vw - 200px - .95px);
   height: 100vh;
-  display: grid;
+  display: flex;
   background: #DCDCDC;
   gap: 1px;
-  grid-template-areas:
-    "sidebar header header"
-    "sidebar page page"
-    "sidebar page page";
-  grid-template-rows: 55px auto auto;
-  grid-template-columns: minmax(200px, 18vw) auto auto;
+  position: absolute;
+  right: 0;
 }
 
-div.child-layout > * {
-  background: #FFFFFF;
+div.child-layout > div#side-section {
+  background: #DCDCDC;
+}
+
+div#side-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  width: 100%;
 }
 
 section.page {
-  grid-area: page;
   display: flex;
+  height: 100%;
+  background: #fefefe;
   flex-direction: column;
 }
 
 .header {
-  grid-area: header;
+  height: 57px;
+  background: #fefefe;
 }
 
 .sidebar {
-  grid-area: sidebar;
+  position: fixed;
+  /* background: #fefefe; */
+  width: 200px;
+  height: 100vh;
   overflow: hidden;
 }

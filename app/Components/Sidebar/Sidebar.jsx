@@ -8,10 +8,11 @@ import { useData } from '@/app/Contexts/DataContext/DataContext';
 import Link from 'next/link';
 import Modal from '../Modal/Modal';
 import CreateChannel from '../CreateChannel/CreateChannel';
+import { setCurrentTeamChannel } from '@/app/utils/setStates';
 
 const Sidebar = ( { className } ) => {
 
-  const { currentChannel, currentTeam, dataloading } = useData();
+  const { currentChannel, currentTeam, dataloading, setCurrentChannel, setCurrentTeam, data } = useData();
   const [ createChannelPopupOpen, setCreateChannelPopupOpen ] = useState( false );
 
   let variants = {
@@ -52,7 +53,15 @@ const Sidebar = ( { className } ) => {
           { dataloading ? <p>Loading...</p> : (
             <>
               { currentTeam?.channels.map( channel => (
-                <Link href={ `/teams/${ currentTeam.teamID }/${ channel.id }` } key={ channel.id } id={ channel.id == currentChannel.id && styles[ "currentChannel" ] }>{ channel.name }</Link>
+                <Link href={ `/teams/${ currentTeam.teamID }/${ channel.id }` } onClick={ () => {
+                  setCurrentTeamChannel( { //idhr check karna hai ke ye jo channel id url (params) ke andar hai , kyunke agar naa ho tou ye error nhin deta , usko team ke pehle channel ko render kar deta but the issue is ke url mein id usi channel ki hoti jo exist nhin karta
+                    teamId: currentTeam.teamID,
+                    channelId: channel.id,
+                    setCurrentChannel,
+                    setCurrentTeam,
+                    sessionData: data.sessionData
+                  } );
+                } } key={ channel.id } id={ channel.id == currentChannel.id && styles[ "currentChannel" ] }>{ channel.name }</Link>
               ) ) }
               <button type='button' id={ styles[ "createChannel" ] } onClick={ () => openPopUp( setCreateChannelPopupOpen ) }>{ `Create Channel` }</button>
             </>

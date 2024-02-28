@@ -1,6 +1,8 @@
 div.sidebar {
   height: 100vh;
-  background: #e7e7e7;
+  /* width: 200px; */
+  flex: 1;
+  background: #fefefe;
 }
 
 div.logo {

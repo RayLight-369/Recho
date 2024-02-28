@@ -24,19 +24,16 @@ const page = ( { params } ) => {
 
   useEffect( () => {
 
-    if ( currentChannel?.id == params.channelId ) return;
-
     console.log( data );
     if ( "signedIn" in data && data.signedIn ) {
       const [ team, channel ] = setCurrentTeamChannel( { //idhr check karna hai ke ye jo channel id url (params) ke andar hai , kyunke agar naa ho tou ye error nhin deta , usko team ke pehle channel ko render kar deta but the issue is ke url mein id usi channel ki hoti jo exist nhin karta
         teamId: params.teamId,
-        channelId: params.channelId,
         setCurrentChannel,
         setCurrentTeam,
         sessionData: data.sessionData
       } );
 
-      if ( team != params.teamId || channel != params.channelId ) {
+      if ( team != params.teamId || !params?.channelId ) {
         router.replace( `/teams/${ team }/${ channel }` );
       }
     }

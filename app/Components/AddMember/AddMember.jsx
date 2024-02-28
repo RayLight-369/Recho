@@ -25,7 +25,7 @@ const AddMember = ( { handleClose } ) => {
   //   scale: 1.06,
   // };
 
-  async function addTeam () {
+  async function addMember () {
     // navigateTo( session );
     if ( !userID.trim().length ) return;
 
@@ -45,7 +45,7 @@ const AddMember = ( { handleClose } ) => {
           <motion.button
             whileHover={ buttonWhileHovering( 1.1, .2 ) }
             className={ styles[ "add-button" ] }
-            onClick={ addTeam }
+            onClick={ addMember }
             disabled={ adding }
           >
             { adding ? "Adding..." : "Add" }

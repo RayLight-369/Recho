@@ -1,0 +1,23 @@
+header#header {
+  display: flex;
+  align-items: center;
+  padding: 0 3.5px;
+}
+
+div.teams-search div.teams select {
+  height: 48px;
+  width: max(100px, 100%);
+  max-width: 200px;
+  text-align: center;
+  padding: 2px 10px;
+  border: 1px solid #cdcdcd;
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: url("data:image/svg+xml;utf8,<svg fill='grey' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  /* background: no-repeat; */
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 4px);
+  background-position-y: 50%;
+}
