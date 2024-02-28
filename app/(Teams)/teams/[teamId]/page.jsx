@@ -5,7 +5,7 @@ import { setCurrentTeamChannel } from '@/app/utils/setStates';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Styles from "./page.module.css";
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Modal from '@/app/Components/Modal/Modal';
 import AddMember from '@/app/Components/AddMember/AddMember';
 import CreateChannel from '@/app/Components/CreateChannel/CreateChannel';
@@ -74,12 +74,11 @@ const page = ( { params } ) => {
           </div>
         </div>
       </div>
-      <div className={ Styles[ 'options-bar' ] }>
-        <div className={ Styles[ "selected-num" ] }></div>
-        <div className={ Styles[ "minor-options" ] }></div>
-        <div className={ Styles[ "major-options" ] }></div>
-      </div>
+      {/* <AnimatePresence mode='wait'>
+        
+      </AnimatePresence> */}
       <AnimatePresence mode='wait'>
+
         { addMemmberPopupOpen && (
           <Modal handleClose={ () => closePopUp( setAddMemmberPopupOpen ) }>
             <AddMember handleClose={ () => closePopUp( setAddMemmberPopupOpen ) } />

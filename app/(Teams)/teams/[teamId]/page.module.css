@@ -70,7 +70,6 @@ div.options-bar {
   width: 55%;
   height: 2.3rem;
   padding: 12px 20px;
-  background: #000;
   border-radius: 50px;
   position: fixed;
   left: calc(50% + 57px);
