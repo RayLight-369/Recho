@@ -9,6 +9,7 @@ import Link from 'next/link';
 import Modal from '../Modal/Modal';
 import CreateChannel from '../CreateChannel/CreateChannel';
 import { setCurrentTeamChannel } from '@/app/utils/setStates';
+import { HIGHER_ROLES } from '@/app/utils/Constants';
 
 const Sidebar = ( { className } ) => {
 
@@ -64,7 +65,14 @@ const Sidebar = ( { className } ) => {
                   } );
                 } } key={ channel.id } id={ channel.id == currentChannel.id ? styles[ "currentChannel" ] : undefined }>{ channel.name }</Link>
               ) ) }
-              <button type='button' id={ styles[ "createChannel" ] } onClick={ () => openPopUp( setCreateChannelPopupOpen ) }>{ `Create Channel` }</button>
+
+              {
+                HIGHER_ROLES.includes(
+                  data?.sessionData.currentUserData.current_user_teams_data.find(
+                    team => team.id === currentTeam.teamID
+                  )?.role ) && <button type='button' id={ styles[ "createChannel" ] } onClick={ () => openPopUp( setCreateChannelPopupOpen ) }>Create Channel</button>
+              }
+
             </>
           ) }
         </div>

@@ -119,9 +119,11 @@ const page = ( { params } ) => {
               {/* <button type="button" onClick={ () => openPopUp( setAddMemmberPopupOpen ) }>Add Member</button> */ }
               <button type="button" onClick={ tableToCSV }>Export Channel</button>
               {
-                data?.sessionData.currentUserData.current_user_teams_data.find(
-                  team => team.id === currentTeam.teamID
-                )?.role === "owner" ? (
+                HIGHER_ROLES.includes(
+                  data?.sessionData.currentUserData.current_user_teams_data.find(
+                    team => team.id === currentTeam.teamID
+                  )?.role
+                ) ? (
                   <>
                     <button type="button" onClick={ () => openPopUp( setCreateChannelPopupOpen ) }>Create Channel</button>
                     <button type="button" onClick={ () => openPopUp( setAddMemmberPopupOpen ) }>Add Member</button>
