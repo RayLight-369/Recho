@@ -28,11 +28,14 @@ const page = ( { params } ) => {
   function tableToCSV () {
 
     const CSV_data = [
-      `title,reporter,created,assignee,priority`
+      `title,reporter,reporter_id,created,assignee,assignee_id,priority`
     ];
 
     currentChannelTasks.forEach( ( task ) => {
-      CSV_data.push( `${ task.title },${ currentTeam.members.find( member => +member.id == +task.reporter )?.name },${ task.created },${ currentTeam.members.find( member => +member.id == +task.assignee )?.name },${ PRIORITY[ task.priority ][ 0 ] }` );
+      const reporter = currentTeam.members.find( member => +member.id == +task.reporter );
+      const assignee = currentTeam.members.find( member => +member.id == +task.assignee );
+
+      CSV_data.push( `${ task.title },${ reporter?.name },${ reporter?.id },${ task.created_at },${ assignee?.name },${ assignee?.id },${ PRIORITY[ task.priority ][ 0 ] }` );
     } );
 
     const csv_data = CSV_data.join( "\n" );
