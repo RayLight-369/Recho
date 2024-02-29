@@ -36,6 +36,8 @@ div.other-teams {
   width: 200px;
   top: 53px;
   gap: 1px;
+  transform-origin: top;
+  overflow: hidden;
 }
 
 div.other-teams a {

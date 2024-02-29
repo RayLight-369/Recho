@@ -15,7 +15,7 @@ import CreateChannel from '@/app/Components/CreateChannel/CreateChannel';
 
 const page = ( { params } ) => {
 
-  const { setCurrentTeam, setCurrentChannel, data, currentChannel, currentTeam, dataloading } = useData();
+  const { setCurrentTeam, setCurrentChannel, data, currentChannel, currentTeam, dataloading, setCurrentChannelTasks } = useData();
   const [ addMemmberPopupOpen, setAddMemmberPopupOpen ] = useState( false );
   const [ createChannelPopupOpen, setCreateChannelPopupOpen ] = useState( false );
   const [ addTaskPopupOpen, setAddTaskPopupOpen ] = useState( false );
@@ -30,6 +30,7 @@ const page = ( { params } ) => {
         teamId: params.teamId,
         setCurrentChannel,
         setCurrentTeam,
+        setCurrentChannelTasks,
         sessionData: data.sessionData
       } );
 

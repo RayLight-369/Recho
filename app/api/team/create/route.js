@@ -33,7 +33,7 @@ export const POST = async ( req, res ) => {
       table: "Teams",
       object: {
         name: body.teamName,
-        members: [ [ body.userId, body.userRole ] ],
+        members: [ [ body.userId, body.userRole, body.userName ] ],
         channel_ids: [ [ channelResponse.data[ 0 ].id, channelResponse.data[ 0 ].name ] ],
         created_at: date,
       }

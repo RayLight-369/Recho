@@ -21,6 +21,7 @@ const Dashboard = () => {
   };
 
   const [ CreateTeamPopupIsOpen, setCreateTeamPopupIsOpen ] = useState( false );
+  const [ type, setType ] = useState( "create" );
 
   const close = () => setCreateTeamPopupIsOpen( false );
 
@@ -36,7 +37,7 @@ const Dashboard = () => {
       <AnimatePresence mode='wait'>
         { CreateTeamPopupIsOpen && (
           <Modal isOpen={ CreateTeamPopupIsOpen } handleClose={ close }>
-            <CreateTeam handleClose={ close } />
+            <CreateTeam handleClose={ close } type={ type } />
           </Modal>
         ) }
       </AnimatePresence>
@@ -44,8 +45,14 @@ const Dashboard = () => {
         type: "spring",
         damping: 7
       } }>
-        <motion.button className={ styles[ 'dashboard-button' ] } title='create a new Team' type="button" whileHover={ hoverAnimation } whileTap={ clickAnimation } onClick={ () => setCreateTeamPopupIsOpen( true ) }>Create a Team</motion.button>
-        <motion.button className={ styles[ 'dashboard-button' ] } type="button" whileHover={ hoverAnimation } whileTap={ clickAnimation }>Join a Team</motion.button>
+        <motion.button className={ styles[ 'dashboard-button' ] } title='create a new Team' type="button" whileHover={ hoverAnimation } whileTap={ clickAnimation } onClick={ () => {
+          setType( "create" );
+          setCreateTeamPopupIsOpen( true );
+        } }>Create a Team</motion.button>
+        <motion.button className={ styles[ 'dashboard-button' ] } title='join a new Team' type="button" whileHover={ hoverAnimation } whileTap={ clickAnimation } onClick={ () => {
+          setType( "join" );
+          setCreateTeamPopupIsOpen( true );
+        } }>Join a Team</motion.button>
       </MotionConfig>
     </div>
   );

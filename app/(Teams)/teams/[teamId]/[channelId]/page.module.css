@@ -35,13 +35,13 @@ p.date {
 
 div.buttons {
   display: flex;
-  gap: 25px;
+  gap: 22px;
   align-items: center;
 }
 
 div.buttons button {
-  padding: 12px;
-  font-size: .8em;
+  padding: 10px;
+  font-size: .76em;
   border: none;
   outline: none;
   background-color: white;
@@ -52,7 +52,7 @@ div.buttons button {
   z-index: 1;
   position: relative;
   transition: 200ms;
-  width: 150px;
+  width: 130px;
 }
 
 button#add-task {
@@ -63,4 +63,9 @@ button#add-task {
 
 div.buttons button:hover {
   transform: scale(1.05);
+}
+
+.task-container {
+  position: relative;
+  top: 20px;
 }

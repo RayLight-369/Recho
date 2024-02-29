@@ -14,10 +14,12 @@ const Header = ( { className, openPopup } ) => {
 
   const variants = {
     open: {
-      scale: 1
+      scaleY: 1,
+      // height: "fit-content",
     },
     close: {
-      scale: 0
+      scaleY: 0,
+      // height: "0",
     }
   };
 
@@ -46,7 +48,7 @@ const Header = ( { className, openPopup } ) => {
           </div>
           <AnimatePresence mode='wait'>
             { dropDownOpen && (
-              <motion.div className={ styles[ "other-teams" ] } variants={ variants } animate="open" initial="close" exit={ "close" }>
+              <motion.div className={ styles[ "other-teams" ] } variants={ variants } animate="open" initial="close" exit="close" >
                 { data?.sessionData?.currentUserData.current_user_teams_data.map( ( team, i ) => (
                   <>
                     { team.id != currentTeam?.teamID && (

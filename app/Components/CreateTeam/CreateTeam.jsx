@@ -7,12 +7,13 @@ import { set_data_after_creating_new_team } from '@/app/utils/setStates';
 import { navigateTo } from '@/app/utils/changePage';
 
 
-const CreateTeam = ( { handleClose } ) => {
+const CreateTeam = ( { handleClose, type = "create" } ) => {
 
   const router = useRouter();
   const [ teamName, setTeamName ] = useState( "" );
+  const [ teamID, setTeamID ] = useState( 0 );
   const [ teamDescription, setTeamDescription ] = useState( "" );
-  const { data: session, setData, setCurrentTeam, setCurrentChannel } = useData();
+  const { data: session, setData, setCurrentTeam, setCurrentChannel, setCurrentChannelTasks } = useData();
   const [ creating, setCreating ] = useState( false );
 
   const buttonWhileHovering = ( scale = 1.1, duration = .1 ) => ( {
@@ -62,11 +63,62 @@ const CreateTeam = ( { handleClose } ) => {
             teamId: DATA.data.id,
             channelId: DATA.data.channel_ids[ 0 ][ 0 ],
             setCurrentTeam,
-            setCurrentChannel
+            setCurrentChannel,
+            setCurrentChannelTasks
           } );
 
-          router.push( `/teams/${ team }/${ channel }` );
           handleClose();
+          router.push( `/teams/${ team }/${ channel }` );
+        } );
+      }
+
+    } catch ( e ) {
+      console.log( e );
+    } finally {
+      setCreating( false );
+    }
+  }
+
+  async function joinTeam () {
+    // navigateTo( session );
+    if ( !teamID ) return;
+    setCreating( true );
+
+    try {
+
+      const teamsData = session.sessionData.currentUserData.current_user_teams_data;
+      console.log( "previous sessionData ", session ); //supabase mein data update karne ke baad yahan update nhi ho raha data
+
+      const response = await fetch( "/api/team/join", {
+        method: "POST",
+        body: JSON.stringify( {
+          userName: session.user.name,
+          userId: session.user.id,
+          userEmail: session.user.email,
+          teamID,
+          teamsData
+        } )
+      } );
+
+      if ( response.ok ) {
+        const DATA = await response.json();
+        console.log( DATA );
+        const new_teamsData = DATA.userData[ 0 ].teamsData;
+        console.log( "new teams Data, ", new_teamsData );
+
+        set_data_after_creating_new_team( session.user.email, setData ).then( async ( { sessionData } ) => {
+          router.prefetch( `/teams/${ DATA.data.id }/${ DATA.data.channel_ids[ 0 ][ 0 ] }` );
+
+          const [ team, channel ] = navigateTo( sessionData, {
+            teamId: DATA.data.id,
+            channelId: DATA.data.channel_ids[ 0 ][ 0 ],
+            setCurrentTeam,
+            setCurrentChannel,
+            setCurrentChannelTasks
+          } );
+
+          handleClose();
+          router.push( `/teams/${ team }/${ channel }` );
         } );
       }
 
@@ -81,21 +133,30 @@ const CreateTeam = ( { handleClose } ) => {
     <MotionConfig transition={ { type: "spring", damping: 7 } } >
       <div className={ styles[ "create-team" ] }>
         <div className={ styles[ "header" ] }>
-          <p className={ styles[ "title" ] }>Create New Team</p>
+          <p className={ styles[ "title" ] }>{ type } New Team</p>
           <motion.button type='button' whileHover={ buttonWhileHovering( 1.2, .2 ) } className={ styles[ 'close' ] } onClick={ handleClose }>✖</motion.button>
         </div>
         <div className={ styles[ "inputs" ] }>
-          <input type="text" placeholder='Team Name' className={ styles[ "name" ] } value={ teamName } onChange={ e => setTeamName( e.target.value ) } />
-          <input type="text" placeholder='Team description' className={ styles[ "description" ] } value={ teamDescription } onChange={ e => setTeamDescription( e.target.value ) } />
+          { type == "create" ? (
+            <>
+              <input type="text" placeholder='Team Name' className={ styles[ "name" ] } value={ teamName } onChange={ e => setTeamName( e.target.value ) } />
+              <input type="text" placeholder='Team description' className={ styles[ "description" ] } value={ teamDescription } onChange={ e => setTeamDescription( e.target.value ) } />
+            </>
+          ) : (
+            <input type="number" placeholder='Team ID' className={ styles[ "name" ] } value={ parseInt( teamID ) } onChange={ e => {
+              setTeamID( parseInt( e.target.value || 0 ) );
+              console.log( teamID );
+            } } />
+          ) }
         </div>
         <div className={ styles[ "buttons" ] }>
           <motion.button
             whileHover={ buttonWhileHovering( 1.1, .2 ) }
             className={ styles[ "create-button" ] }
-            onClick={ createTeam }
+            onClick={ type == "create" ? createTeam : joinTeam }
             disabled={ creating }
           >
-            { creating ? "Creating..." : "Create" }
+            { creating ? `${ type }...` : `${ type }` }
           </motion.button>
           <motion.button
             whileHover={ buttonWhileHovering( 1.1, .2 ) }

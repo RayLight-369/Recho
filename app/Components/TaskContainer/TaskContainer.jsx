@@ -5,7 +5,7 @@ import Task from '../Task/Task';
 
 import Styles from "./TaskContainer.module.css";
 
-const TaskContainer = () => {
+const TaskContainer = ( { className } ) => {
 
   const { setCurrentChannelTasks, currentChannelTasks, data, dataloading } = useData();
 
@@ -17,12 +17,21 @@ const TaskContainer = () => {
 
   if ( currentChannelTasks?.length ) {
     return (
-      <Reorder.Group as='div' className={ Styles[ 'tasks-container' ] } onReorder={ setCurrentChannelTasks } values={ currentChannelTasks } axis='y' >
-        <AnimatePresence initial={ false }>
-          { currentChannelTasks?.map( ( task, i ) => (
-            <Task task={ task } key={ task.id } />
-          ) ) }
-        </AnimatePresence>
+      <Reorder.Group as='div' className={ className } id={ Styles[ 'tasks-container' ] } onReorder={ setCurrentChannelTasks } values={ currentChannelTasks } axis='y' >
+        <div id={ Styles[ "headings" ] }>
+          <p>Title</p>
+          <p>Reporter</p>
+          <p>Created</p>
+          <p>Assignee</p>
+          <p>Priority</p>
+        </div>
+        <div id={ Styles[ "container" ] }>
+          <AnimatePresence initial={ false }>
+            { currentChannelTasks?.map( ( task ) => (
+              <Task task={ task } key={ task.id } />
+            ) ) }
+          </AnimatePresence>
+        </div>
       </Reorder.Group>
     );
   }

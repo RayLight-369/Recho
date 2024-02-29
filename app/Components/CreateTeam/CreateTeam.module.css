@@ -23,6 +23,7 @@ div.header p.title {
   color: #343434;
   font-size: 21px;
   font-weight: 600;
+  text-transform: capitalize;
 }
 
 div.header button.close {
@@ -88,6 +89,7 @@ div.buttons button {
 div.buttons button.create-button {
   background: #430283;
   color: white;
+  text-transform: capitalize;
 }
 
 div.buttons button.cancel-button {
