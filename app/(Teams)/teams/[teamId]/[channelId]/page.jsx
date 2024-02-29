@@ -66,6 +66,35 @@ const page = ( { params } ) => {
 
   }
 
+  function csvToTable ( e ) {
+    const file = e.target.files[ 0 ];
+    const reader = new FileReader();
+
+    if ( file ) {
+      reader.addEventListener( 'load', E => {
+        const csvDataString = E.target.result.toString();
+        console.log( 'CSV Data:', csvDataString );
+
+        const rowsHeader = csvDataString.split( '\r' ).join( '' ).split( '\n' );
+        const headers = rowsHeader[ 0 ].split( ',' );
+        const content = rowsHeader.filter( ( _, i ) => i > 0 );
+        console.log( 'Headers: ', headers );
+        const jsonFormatted = content.map( row => {
+          const columns = row.split( ',' );
+          return columns.reduce( ( p, c, i ) => {
+            p[ headers[ i ] ] = c;
+            return p;
+          }, {} );
+        } );
+
+
+        console.log( 'jsonFormatted:', jsonFormatted );
+      } );
+
+      reader.readAsText( file, 'UTF-8' );
+    }
+  }
+
 
   useEffect( () => {
 
@@ -120,7 +149,11 @@ const page = ( { params } ) => {
             </div>
             <div className={ Styles[ "buttons" ] }>
               {/* <button type="button" onClick={ () => openPopUp( setAddMemmberPopupOpen ) }>Add Member</button> */ }
-              <button type="button" onClick={ tableToCSV }>Export Channel</button>
+              <button type="button" onClick={ tableToCSV }>Export to Csv</button>
+              <button type="button" className={ Styles[ 'file-btn' ] }>
+                <label htmlFor="files" className={ Styles[ "btn" ] }>Import Csv</label>
+                <input className={ Styles[ 'file-input' ] } id='files' name='files' type="file" accept='.csv' onChange={ csvToTable } />
+              </button>
               {
                 HIGHER_ROLES.includes(
                   data?.sessionData.currentUserData.current_user_teams_data.find(

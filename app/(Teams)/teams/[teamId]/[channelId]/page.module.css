@@ -39,8 +39,9 @@ div.buttons {
   align-items: center;
 }
 
-div.buttons button {
-  padding: 10px;
+div.buttons > * {
+  padding: 2px;
+  height: 30px;
   font-size: .76em;
   border: none;
   outline: none;
@@ -55,13 +56,31 @@ div.buttons button {
   width: 130px;
 }
 
+div.buttons > button.file-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.buttons > button.file-btn > label {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input.file-input {
+  display: none;
+}
+
 button#add-task {
   box-shadow: none;
   background: #47246a;
   color: #fefefe;
 }
 
-div.buttons button:hover {
+div.buttons > *:hover {
   transform: scale(1.05);
 }
 
