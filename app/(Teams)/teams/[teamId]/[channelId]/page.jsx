@@ -11,7 +11,8 @@ import AddMember from '@/app/Components/AddMember/AddMember';
 import CreateChannel from '@/app/Components/CreateChannel/CreateChannel';
 import OptionBar from '@/app/Components/OptionBar/OptionBar';
 import TaskContainer from '@/app/Components/TaskContainer/TaskContainer';
-import { HIGHER_ROLES, PRIORITY } from '@/app/utils/Constants';
+import { HIGHER_ROLES, PRIORITY, STATUS } from '@/app/utils/Constants';
+import AddTask from '@/app/Components/AddTask/AddTask';
 
 
 
@@ -28,19 +29,19 @@ const page = ( { params } ) => {
   function tableToCSV () {
 
     const CSV_data = [
-      `title,reporter,reporter_id,created,assignee,assignee_id,priority`
+      `title,description,reporter,created,assignee,priority,status,reporter_id,assignee_id,status_id,priority_id`
     ];
 
     currentChannelTasks.forEach( ( task ) => {
       const reporter = currentTeam.members.find( member => +member.id == +task.reporter );
       const assignee = currentTeam.members.find( member => +member.id == +task.assignee );
 
-      CSV_data.push( `${ task.title },${ reporter?.name },${ reporter?.id },${ task.created_at },${ assignee?.name },${ assignee?.id },${ PRIORITY[ task.priority ][ 0 ] }` );
+      CSV_data.push( `${ task.title },${ task.description },${ reporter?.name },${ task.created_at },${ assignee?.name },${ PRIORITY[ task.priority ][ 0 ] },${ STATUS[ task.status ][ 0 ] },${ reporter?.id },${ assignee?.id },${ task.status },${ task.priority }` );
     } );
 
     const csv_data = CSV_data.join( "\n" );
 
-    console.log( "datatatatata: ", CSV_data );
+    // console.log( "datatatatata: ", CSV_data );
 
     const CSVFile = new Blob( [ csv_data ], {
       type: "text/csv"
@@ -73,12 +74,12 @@ const page = ( { params } ) => {
     if ( file ) {
       reader.addEventListener( 'load', E => {
         const csvDataString = E.target.result.toString();
-        console.log( 'CSV Data:', csvDataString );
+        // console.log( 'CSV Data:', csvDataString );
 
         const rowsHeader = csvDataString.split( '\r' ).join( '' ).split( '\n' );
         const headers = rowsHeader[ 0 ].split( ',' );
         const content = rowsHeader.filter( ( _, i ) => i > 0 );
-        console.log( 'Headers: ', headers );
+
         const jsonFormatted = content.map( row => {
           const columns = row.split( ',' );
           return columns.reduce( ( p, c, i ) => {
@@ -89,6 +90,19 @@ const page = ( { params } ) => {
 
 
         console.log( 'jsonFormatted:', jsonFormatted );
+
+        const formattedJsonArray = jsonFormatted.map( data => ( {
+          title: data.title,
+          description: data.description,
+          status: +data.status_id,
+          priority: +data.priority_id,
+          assignee: +data.assignee_id,
+          reporter: +data.reporter_id,
+          created_at: data.created
+        } ) );
+
+        console.log( formattedJsonArray );
+
       } );
 
       reader.readAsText( file, 'UTF-8' );
@@ -163,7 +177,7 @@ const page = ( { params } ) => {
                   <>
                     <button type="button" onClick={ () => openPopUp( setCreateChannelPopupOpen ) }>Create Channel</button>
                     <button type="button" onClick={ () => openPopUp( setAddMemmberPopupOpen ) }>Add Member</button>
-                    <button type="button" id={ Styles[ 'add-task' ] }>Add Task</button>
+                    <button type="button" onClick={ () => openPopUp( setAddTaskPopupOpen ) } id={ Styles[ 'add-task' ] }>Add Task</button>
                   </>
                 ) : (
                   currentTeam?.teamSettings.all_members_can_add_tasks ? (
@@ -182,6 +196,11 @@ const page = ( { params } ) => {
           { addMemmberPopupOpen && (
             <Modal handleClose={ () => closePopUp( setAddMemmberPopupOpen ) }>
               <AddMember handleClose={ () => closePopUp( setAddMemmberPopupOpen ) } />
+            </Modal>
+          ) }
+          { addTaskPopupOpen && (
+            <Modal handleClose={ () => closePopUp( setAddTaskPopupOpen ) }>
+              <AddTask handleClose={ () => closePopUp( setAddTaskPopupOpen ) } />
             </Modal>
           ) }
           { addTaskPopupOpen && (

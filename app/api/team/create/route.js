@@ -1,4 +1,6 @@
 import { getData, insertData, updateData } from "@/app/Supabase/Supabase";
+import { v5 as uid } from "uuid";
+
 
 export const POST = async ( req, res ) => {
   try {
@@ -36,11 +38,12 @@ export const POST = async ( req, res ) => {
         members: [ [ body.userId, body.userRole, body.userName ] ],
         channel_ids: [ [ channelResponse.data[ 0 ].id, channelResponse.data[ 0 ].name ] ],
         created_at: date,
+        invite_link: `/invite/${ uid() }`
       }
     } );
 
     let TeamData = response.data[ 0 ];
-    body.teamsData.push( { "id": TeamData.id, "teamName": TeamData.name, "role": "owner", "settings": { "color": "Light" } } );
+    body.teamsData.push( { "id": TeamData.id, "team invite link": TeamData.invite_link, "teamName": TeamData.name, "role": "owner", "settings": { "color": "Light" } } );
 
     let userData = await updateData( {
       table: "Users",

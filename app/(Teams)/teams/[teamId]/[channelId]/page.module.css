@@ -53,7 +53,7 @@ div.buttons > * {
   z-index: 1;
   position: relative;
   transition: 200ms;
-  width: 130px;
+  width: 110px;
 }
 
 div.buttons > button.file-btn {

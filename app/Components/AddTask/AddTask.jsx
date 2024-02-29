@@ -29,9 +29,9 @@ const AddTask = ( { handleClose } ) => {
   //   scale: 1.06,
   // };
 
-  async function addMember () {
+  async function addTask () {
     // navigateTo( session );
-    if ( !userID.trim().length ) return;
+    if ( !taskTitle.trim().length ) return;
 
   }
 
@@ -43,13 +43,13 @@ const AddTask = ( { handleClose } ) => {
           <motion.button type='button' whileHover={ buttonWhileHovering( 1.2, .2 ) } className={ styles[ 'close' ] } onClick={ handleClose }>✖</motion.button>
         </div>
         <div className={ styles[ "inputs" ] }>
-          <input type="text" placeholder='User ID' className={ styles[ "name" ] } value={ userID } onChange={ e => setUserID( e.target.value ) } />
+          <input type="text" placeholder='Task Title' className={ styles[ "name" ] } value={ taskTitle } onChange={ e => setTaskTitle( e.target.value ) } />
         </div>
         <div className={ styles[ "buttons" ] }>
           <motion.button
             whileHover={ buttonWhileHovering( 1.1, .2 ) }
             className={ styles[ "add-button" ] }
-            onClick={ addMember }
+            onClick={ addTask }
             disabled={ adding }
           >
             { adding ? "Adding..." : "Add" }

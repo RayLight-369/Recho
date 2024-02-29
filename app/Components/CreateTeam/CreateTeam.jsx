@@ -11,7 +11,7 @@ const CreateTeam = ( { handleClose, type = "create" } ) => {
 
   const router = useRouter();
   const [ teamName, setTeamName ] = useState( "" );
-  const [ teamID, setTeamID ] = useState( 0 );
+  const [ teamID, setTeamID ] = useState( "" );
   const [ teamDescription, setTeamDescription ] = useState( "" );
   const { data: session, setData, setCurrentTeam, setCurrentChannel, setCurrentChannelTasks } = useData();
   const [ creating, setCreating ] = useState( false );
@@ -81,7 +81,7 @@ const CreateTeam = ( { handleClose, type = "create" } ) => {
 
   async function joinTeam () {
     // navigateTo( session );
-    if ( !teamID ) return;
+    if ( !teamID.trim().length ) return;
     setCreating( true );
 
     try {
@@ -95,7 +95,7 @@ const CreateTeam = ( { handleClose, type = "create" } ) => {
           userName: session.user.name,
           userId: session.user.id,
           userEmail: session.user.email,
-          teamID,
+          invite_link: teamID,
           teamsData
         } )
       } );
@@ -143,8 +143,8 @@ const CreateTeam = ( { handleClose, type = "create" } ) => {
               <input type="text" placeholder='Team description' className={ styles[ "description" ] } value={ teamDescription } onChange={ e => setTeamDescription( e.target.value ) } />
             </>
           ) : (
-            <input type="number" placeholder='Team ID' className={ styles[ "name" ] } value={ parseInt( teamID ) } onChange={ e => {
-              setTeamID( parseInt( e.target.value || 0 ) );
+            <input type="text" placeholder='Team ID' className={ styles[ "name" ] } value={ teamID } onChange={ e => {
+              setTeamID( e.target.value );
               console.log( teamID );
             } } />
           ) }

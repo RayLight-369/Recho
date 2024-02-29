@@ -12,7 +12,7 @@ export const POST = async ( req, res ) => {
     const prevTeamsData = await getData( {
       table: "Teams",
       where: {
-        id: body.teamID
+        invite_link: body.invite_link
       }
     } );
 
@@ -27,7 +27,7 @@ export const POST = async ( req, res ) => {
       const response = await updateData( {
         table: "Teams",
         where: {
-          id: body.teamID
+          invite_link: body.invite_link
         },
         object: {
           members: updatedMembers,
