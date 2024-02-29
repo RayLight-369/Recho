@@ -39,7 +39,7 @@ const AddTask = ( { handleClose } ) => {
     <MotionConfig transition={ { type: "spring", damping: 7 } } >
       <div className={ styles[ "add-member" ] }>
         <div className={ styles[ "header" ] }>
-          <p className={ styles[ "title" ] }>Add New Member</p>
+          <p className={ styles[ "title" ] }>Add New Task</p>
           <motion.button type='button' whileHover={ buttonWhileHovering( 1.2, .2 ) } className={ styles[ 'close' ] } onClick={ handleClose }>✖</motion.button>
         </div>
         <div className={ styles[ "inputs" ] }>

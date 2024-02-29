@@ -203,11 +203,6 @@ const page = ( { params } ) => {
               <AddTask handleClose={ () => closePopUp( setAddTaskPopupOpen ) } />
             </Modal>
           ) }
-          { addTaskPopupOpen && (
-            <Modal handleClose={ () => closePopUp( setAddTaskPopupOpen ) }>
-              <AddMember handleClose={ () => closePopUp( setAddTaskPopupOpen ) } />
-            </Modal>
-          ) }
           { createChannelPopupOpen && (
             <Modal handleClose={ () => closePopUp( setCreateChannelPopupOpen ) }>
               <CreateChannel handleClose={ () => closePopUp( setCreateChannelPopupOpen ) } />
