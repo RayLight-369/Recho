@@ -11,6 +11,10 @@ div.task {
   width: 100%
 }
 
+div.task p {
+  white-space: nowrap;
+}
+
 div.task p.title {
   /* flex: 1; */
   width: calc(50% - 50px);

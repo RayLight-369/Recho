@@ -37,6 +37,7 @@ const Sidebar = ( { className } ) => {
   const closePopUp = ( setState ) => setState( false );
   const openPopUp = ( setState ) => setState( true );
 
+  // if ( currentTeam ) {
   return (
     <>
       <div className={ `${ styles.sidebar } ${ className && className }` }>
@@ -67,10 +68,10 @@ const Sidebar = ( { className } ) => {
               ) ) }
 
               {
-                HIGHER_ROLES.includes(
-                  data?.sessionData.currentUserData.current_user_teams_data.find(
-                    team => team.id === currentTeam.teamID
-                  )?.role ) && <button type='button' id={ styles[ "createChannel" ] } onClick={ () => openPopUp( setCreateChannelPopupOpen ) }>Create Channel</button>
+                currentTeam && HIGHER_ROLES.includes(
+                data?.sessionData.currentUserData.current_user_teams_data.find(
+                  team => team.id === currentTeam.teamID
+                )?.role ) && <button type='button' id={ styles[ "createChannel" ] } onClick={ () => openPopUp( setCreateChannelPopupOpen ) }>Create Channel</button>
               }
 
             </>
@@ -86,6 +87,8 @@ const Sidebar = ( { className } ) => {
       </AnimatePresence>
     </>
   );
+  // }
+
 };
 
 export default memo( Sidebar );

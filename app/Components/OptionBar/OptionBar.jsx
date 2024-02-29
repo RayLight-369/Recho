@@ -57,6 +57,7 @@ const OptionBar = ( { setCreateChannelPopupOpen, setAddMemberPopupOpen, setAddTa
         <motion.div className={ Styles[ "major-options" ] }>
           <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setCreateChannelPopupOpen( true ) }>+ Create Channel</button>
           <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setAddMemberPopupOpen( true ) }>+ Add Member</button>
+          <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setAddTaskPopupOpen( true ) }>+ Add Task</button>
         </motion.div>
       ) }
       <motion.div className={ `${ Styles[ "optionOpenClose" ] } ${ openOptionBar ? Styles[ "opened" ] : undefined }` }

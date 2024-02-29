@@ -34,6 +34,13 @@ const Header = ( { className, openPopup } ) => {
     </header>;
   }
 
+  useEffect( () => {
+    const select = document.querySelector( "div#teamNames" );
+    document.onclick = e => {
+      if ( !select.contains( e.target ) ) toggleDropDown( false );
+    };
+  }, [] );
+
   const ToggleDropDown = () => toggleDropDown( prev => !prev );
   const closeDropDown = () => toggleDropDown( false );
 
@@ -44,8 +51,8 @@ const Header = ( { className, openPopup } ) => {
 
           <div className={ styles[ 'select' ] } name="teamNames" id="teamNames" >
             <p className={ styles[ "default-team" ] }>{ currentTeam?.teamName }</p>
-
           </div>
+
           <AnimatePresence mode='wait'>
             { dropDownOpen && (
               <motion.div className={ styles[ "other-teams" ] } variants={ variants } animate="open" initial="close" exit="close" >
