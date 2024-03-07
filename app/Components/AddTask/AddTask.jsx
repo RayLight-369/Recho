@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useData } from '@/app/Contexts/DataContext/DataContext';
 import { set_data_after_creating_new_team } from '@/app/utils/setStates';
 import { navigateTo } from '@/app/utils/changePage';
+import DropDown from '../DropDown/DropDown';
 
 
 const AddTask = ( { handleClose } ) => {
@@ -17,6 +18,10 @@ const AddTask = ( { handleClose } ) => {
   const [ reporter, setReporter ] = useState( 0 );
   const { data: session, setData, setCurrentTeam, setCurrentChannel } = useData();
   const [ adding, setAdding ] = useState( false );
+
+
+  const [ dropDownOpen, toggleDropDown ] = useState( false );
+
 
   const buttonWhileHovering = ( scale = 1.1, duration = .1 ) => ( {
     scale,
@@ -44,6 +49,10 @@ const AddTask = ( { handleClose } ) => {
         </div>
         <div className={ styles[ "inputs" ] }>
           <input type="text" placeholder='Task Title' className={ styles[ "name" ] } value={ taskTitle } onChange={ e => setTaskTitle( e.target.value ) } />
+          <textarea placeholder='Task Description' className={ styles[ "description" ] } value={ taskDescription } onChange={ e => setDescription( e.target.value ) } />
+        </div>
+        <div className={ styles[ "infos" ] }>
+          <DropDown array={ [ "ray", "haha", "baha", "daha", "muaha" ] } dropDownOpen={ dropDownOpen } toggleDropDown={ toggleDropDown } />
         </div>
         <div className={ styles[ "buttons" ] }>
           <motion.button

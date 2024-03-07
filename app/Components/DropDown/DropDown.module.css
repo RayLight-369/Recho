@@ -1,0 +1,97 @@
+div.dropdown-container {
+  height: 100%;
+  position: relative;
+  width: 30%;
+  /* max-width: 200px; */
+  /* width: max(100px, 100%); */
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+div.dropdown-container p.label {
+  font-size: .85rem;
+  color: #65307a;
+}
+
+div.select {
+  height: 30px;
+  width: 100px;
+  /* max-width: 200px; */
+  text-align: center;
+  padding: 2px 30px 2px 10px;
+  /* border: 1px solid #cdcdcd; */
+  border-radius: 3px;
+  outline: none;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  color: #65307a;
+  position: relative;
+  transition: 130ms;
+  background-color: #f9f2ff;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%2365307a' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 3px);
+  background-position-y: 50%;
+
+}
+
+div.select:hover {
+  transform: scale(1.03);
+}
+
+p.default-item {
+  font-size: .83rem;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  position: relative;
+  left: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+div.other-items {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background: #dedede;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  width: 140px;
+  top: 40px;
+  /* gap: 1px; */
+  transform-origin: top;
+  z-index: 20;
+  /* overflow: hidden; */
+}
+
+div.other-items button {
+  text-decoration: none;
+  outline: none;
+  border: none;
+  color: #343434;
+  padding: 6px 12px;
+  background: #fefefe;
+  display: block;
+  font-size: .78rem;
+  position: relative;
+  transition: 130ms;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+div.other-items button:not(:last-child) {
+  border-bottom: .5px solid #ddd;
+}
+
+div.other-items button:hover {
+  /* background: #ededed; */
+  transform: scale(1.04);
+  /* border: .5px solid #ddd; */
+  box-shadow: 0 0 5px #bcbcbc;
+  z-index: 10;
+}

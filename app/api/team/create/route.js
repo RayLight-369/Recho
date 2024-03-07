@@ -1,5 +1,5 @@
 import { getData, insertData, updateData } from "@/app/Supabase/Supabase";
-import { v5 as uid } from "uuid";
+import { v4 as uid } from "uuid";
 
 
 export const POST = async ( req, res ) => {

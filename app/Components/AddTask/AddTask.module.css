@@ -1,5 +1,5 @@
 div.add-member {
-  width: 40vw;
+  width: 52vw;
   height: fit-content;
   padding: 35px 40px;
   display: flex;
@@ -9,6 +9,7 @@ div.add-member {
   font-family: archivo;
   border-radius: 20px;
   gap: 35px;
+  position: relative;
 }
 
 div.header {
@@ -16,6 +17,7 @@ div.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
   /* background: #636363; */
 }
 
@@ -43,9 +45,10 @@ div.inputs {
   flex-direction: column;
   gap: 25px;
   width: calc(100% - 50px);
+  position: relative;
 }
 
-div.inputs input {
+div.inputs > * {
   width: 100%;
   border: none;
   outline: none;
@@ -58,14 +61,22 @@ div.inputs input {
   transition: 150ms cubic-bezier(0.4, 0.98, 0.35, 0.81);
 }
 
-div.inputs input:focus {
+div.inputs > *:focus {
   transform: scale(1.06);
   border-bottom-color: #9f7dc2;
 }
 
-div.inputs input::placeholder {
+div.inputs > *::placeholder {
   color: #acacac;
   font-size: 12px;
+}
+
+div.inputs > textarea {
+  height: 25px;
+  min-height: 25px;
+  max-height: 160px;
+  max-width: 100%;
+  min-width: 100%;
 }
 
 div.buttons {
@@ -94,4 +105,10 @@ div.buttons button.cancel-button {
   border: 1.2px solid #430283;
   color: #430283;
   background: none;
+}
+
+div.infos {
+  /* background: #888; */
+  width: calc(100% - 50px);
+  height: auto;
 }

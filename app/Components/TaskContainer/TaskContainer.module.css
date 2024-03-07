@@ -1,7 +1,7 @@
 div#tasks-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   /* align-items: center;
   width: 100%; */
 }
@@ -12,7 +12,7 @@ div#headings {
   justify-content: space-between;
   align-items: center;
   padding: 0 28px;
-  font-size: 12px;
+  font-size: 11px;
   color: #777;
   position: relative;
 }
@@ -20,7 +20,7 @@ div#headings {
 div#container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   width: 100%;
 }
 
