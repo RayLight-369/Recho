@@ -52,13 +52,13 @@ const OptionBar = ( { setCreateChannelPopupOpen, setAddMemberPopupOpen, setAddTa
       <motion.div className={ Styles[ "selected-num" ] }></motion.div>
       <motion.div className={ Styles[ "minor-options" ] }></motion.div>
       <motion.div className={ Styles[ "major-options" ] }>
-        <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ importCSV }>+ Import CSV</button>
+        <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ exportCSV }>+ Export CSV</button>
         { isAdmin && (
           <>
             <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setCreateChannelPopupOpen( true ) }>+ Create Channel</button>
             <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setAddMemberPopupOpen( true ) }>+ Add Member</button>
             <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setAddTaskPopupOpen( true ) }>+ Add Task</button>
-            <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ exportCSV }>+ Export CSV</button>
+            <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ importCSV }>+ Import CSV</button>
           </>
         ) }
       </motion.div>

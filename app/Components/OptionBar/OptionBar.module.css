@@ -53,7 +53,7 @@ div.options-bar.opened div.major-options {
 }
 
 div.options-bar div.major-options {
-  transition: 240ms;
+  transition: 150ms;
   opacity: 0;
 }
 

@@ -3,7 +3,7 @@
 import { useData } from '@/app/Contexts/DataContext/DataContext';
 import { setCurrentSessionTasks, setCurrentTeamChannel, set_data_after_creating } from '@/app/utils/setStates';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Styles from "./page.module.css";
 import { AnimatePresence, motion } from 'framer-motion';
 import Modal from '@/app/Components/Modal/Modal';
@@ -25,6 +25,7 @@ const page = ( { params } ) => {
   const [ addMemmberPopupOpen, setAddMemmberPopupOpen ] = useState( false );
   const [ createChannelPopupOpen, setCreateChannelPopupOpen ] = useState( false );
   const [ addTaskPopupOpen, setAddTaskPopupOpen ] = useState( false );
+  const inputRef = useRef();
   const router = useRouter();
 
 
@@ -220,7 +221,7 @@ const page = ( { params } ) => {
                   <>
                     <button type="button" className={ Styles[ 'file-btn' ] }>
                       <label htmlFor="files" className={ Styles[ "btn" ] }>Import Csv</label>
-                      <input className={ Styles[ 'file-input' ] } id='files' name='files' type="file" accept='.csv' onChange={ csvToTable } />
+                      <input ref={inputRef} className={ Styles[ 'file-input' ] } id='files' name='files' type="file" accept='.csv' onChange={ csvToTable } />
                     </button>
                     <button type="button" onClick={ () => openPopUp( setCreateChannelPopupOpen ) }>Create Channel</button>
                     <button type="button" onClick={ () => openPopUp( setAddMemmberPopupOpen ) }>Add Member</button>
@@ -238,8 +239,7 @@ const page = ( { params } ) => {
         </div>
         <AnimatePresence mode='wait'>
           <OptionBar exportCSV={tableToCSV} importCSV={() => {
-            const label = document.querySelector("label." + Styles[ "btn" ]);
-            label.click();
+            inputRef.current.click();
           }} isAdmin={ HIGHER_ROLES.includes( data?.sessionData.currentUserData.current_user_teams_data.find( team => team.id == currentTeam.teamID )?.role ) } setAddMemberPopupOpen={ setAddMemmberPopupOpen } setCreateChannelPopupOpen={ setCreateChannelPopupOpen } setAddTaskPopupOpen={ setAddTaskPopupOpen } />
         </AnimatePresence>
         <AnimatePresence mode='wait'>
