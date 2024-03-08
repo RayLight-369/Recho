@@ -11,7 +11,7 @@ export const POST = async ( req, res ) => {
 
     const TaskResponse = await insertData( {
       table: "Tasks",
-      object: !bulkData?.bulkData?.length ? bulkData : bulkData.bulkData
+      object: !bulkData?.bulkData?.length ? ( { created_at, ...bulkData } ) : bulkData.bulkData
     } );
 
     // {
@@ -31,19 +31,19 @@ export const POST = async ( req, res ) => {
         id: currentChannel.id
       }
     } );
-    console.log( prevChannelData.data );
+
     let updatedTaskIds = prevChannelData.data[ 0 ].tasks_ids;
     updatedTaskIds.push( ...( TaskResponse.data.map( task => task.id ) ) );
-    console.log( updatedTaskIds );
-    // await updateData( {
-    //   table: "Channels",
-    //   where: {
-    //     id: currentChannel.id,
-    //   },
-    //   object: {
-    //     tasks_ids: updatedTaskIds
-    //   }
-    // } );
+
+    await updateData( {
+      table: "Channels",
+      where: {
+        id: currentChannel.id,
+      },
+      object: {
+        tasks_ids: updatedTaskIds
+      }
+    } );
 
     console.log( "body ", JSON.stringify( body, null, 2 ) );
 
