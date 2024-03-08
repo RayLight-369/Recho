@@ -1,5 +1,5 @@
 import { getData, insertData, updateData } from "@/app/Supabase/Supabase";
-import { pusherClient, pusherServer } from "@/lib/pusher";
+import { pusherServer } from "@/lib/pusher";
 
 export const POST = async ( req, res ) => {
   try {
@@ -17,7 +17,7 @@ export const POST = async ( req, res ) => {
         status: 0,
         priority: 2,
         due_date: date,
-        created_at: data,
+        created_at: date,
         assignee: 1,
         reporter: 1
       }
