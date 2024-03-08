@@ -20,7 +20,7 @@ div#headings {
 div#container {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
   width: 100%;
 }
 

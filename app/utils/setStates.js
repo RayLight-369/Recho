@@ -1,9 +1,18 @@
 import { getTeamsData } from "../Supabase/Supabase";
 
-export const set_data_after_creating_new_team = async ( email, setData, updatedData ) => {
+export const set_data_after_creating = async ( email, setData, updatedData ) => {
   const sessionData = await getTeamsData( { email } );
   setData( prev => ( { ...prev, sessionData } ) );
   return { updatedData, sessionData };
+};
+
+export const setCurrentSessionTasks = ( { currentChannel, setCurrentChannel, currentChannelTasks, setCurrentChannelTasks } ) => {
+  try {
+    console.log( "currentChannel:", currentChannel );
+    console.log( "currentChannelTasks:", currentChannelTasks );
+  } catch ( e ) {
+    console.log( e );
+  }
 };
 
 export const setCurrentTeamChannel = ( { teamId, channelId, sessionData, setCurrentTeam, setCurrentChannel, setCurrentChannelTasks } ) => {

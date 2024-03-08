@@ -1,7 +1,7 @@
 "use client";
 
 import { useData } from '@/app/Contexts/DataContext/DataContext';
-import { setCurrentTeamChannel } from '@/app/utils/setStates';
+import { setCurrentSessionTasks, setCurrentTeamChannel, set_data_after_creating } from '@/app/utils/setStates';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Styles from "./page.module.css";
@@ -13,13 +13,14 @@ import OptionBar from '@/app/Components/OptionBar/OptionBar';
 import TaskContainer from '@/app/Components/TaskContainer/TaskContainer';
 import { HIGHER_ROLES, PRIORITY, STATUS } from '@/app/utils/Constants';
 import AddTask from '@/app/Components/AddTask/AddTask';
+import { navigateTo } from '@/app/utils/changePage';
 
 
 
 
 const page = ( { params } ) => {
 
-  const { setCurrentTeam, setCurrentChannel, data, currentChannel, currentTeam, dataloading, setCurrentChannelTasks, currentChannelTasks } = useData();
+  const { setCurrentTeam, setCurrentChannel, data, setData, currentChannel, currentTeam, dataloading, setCurrentChannelTasks, currentChannelTasks } = useData();
   const [ addMemmberPopupOpen, setAddMemmberPopupOpen ] = useState( false );
   const [ createChannelPopupOpen, setCreateChannelPopupOpen ] = useState( false );
   const [ addTaskPopupOpen, setAddTaskPopupOpen ] = useState( false );
@@ -29,14 +30,14 @@ const page = ( { params } ) => {
   function tableToCSV () {
 
     const CSV_data = [
-      `title,description,reporter,created,assignee,priority,status,reporter_id,assignee_id,status_id,priority_id`
+      `title,description,reporter,created,assignee,priority,status,due,reporter_id,assignee_id,status_id,priority_id`
     ];
 
     currentChannelTasks.forEach( ( task ) => {
-      const reporter = currentTeam.members.find( member => +member.id == +task.reporter );
-      const assignee = currentTeam.members.find( member => +member.id == +task.assignee );
+      const reporter = +task.reporter != 1 ? currentTeam.members.find( member => +member.id == +task.reporter ) : { name: "Any", id: 1 };
+      const assignee = +task.assignee != 1 ? currentTeam.members.find( member => +member.id == +task.assignee ) : { name: "Any", id: 1 };
 
-      CSV_data.push( `${ task.title },${ task.description },${ reporter?.name },${ task.created_at },${ assignee?.name },${ PRIORITY[ task.priority ][ 0 ] },${ STATUS[ task.status ][ 0 ] },${ reporter?.id },${ assignee?.id },${ task.status },${ task.priority }` );
+      CSV_data.push( `${ task.title },${ task.description },${ reporter?.name },${ task.created_at },${ assignee?.name },${ PRIORITY[ task.priority ][ 0 ] },${ STATUS[ task.status ][ 0 ] },${ task.due_date },${ reporter?.id },${ assignee?.id },${ task.status },${ task.priority }` );
     } );
 
     const csv_data = CSV_data.join( "\n" );
@@ -72,7 +73,7 @@ const page = ( { params } ) => {
     const reader = new FileReader();
 
     if ( file ) {
-      reader.addEventListener( 'load', E => {
+      reader.addEventListener( 'load', async E => {
         const csvDataString = E.target.result.toString();
         // console.log( 'CSV Data:', csvDataString );
 
@@ -98,10 +99,44 @@ const page = ( { params } ) => {
           priority: +data.priority_id,
           assignee: +data.assignee_id,
           reporter: +data.reporter_id,
-          created_at: data.created
+          created_at: data.created,
+          due_date: data.due
         } ) );
 
-        console.log( formattedJsonArray );
+        try {
+
+          const res = await fetch( "/api/task/add", {
+            method: "POST",
+            body: JSON.stringify( {
+              bulkData: formattedJsonArray,
+              currentChannel
+            } ),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          } );
+
+          if ( res.ok ) {
+
+            const body = await res.json();
+            console.log( body );
+            // setCurrentSessionTasks({currentChannel, currentChannelTasks, setCurrentChannel, setCu})
+            set_data_after_creating( data.user.email, setData ).then( ( { sessionData } ) => {
+              navigateTo( sessionData, {
+                teamId: currentTeam.teamID,
+                channelId: currentChannel.id,
+                setCurrentTeam,
+                setCurrentChannel,
+                setCurrentChannelTasks
+              } );
+            } );
+
+          }
+
+
+        } catch ( e ) {
+          console.log( e );
+        }
 
       } );
 

@@ -1,9 +1,17 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from "./DropDown.module.css";
 
 
-const DropDown = ( { array, dropDownOpen, toggleDropDown, label = "Name:" } ) => {
+const DropDown = ( { array, any = false, dropDownOpen, toggleDropDown, label, backWorkArray, setState } ) => {
+
+  // const ref = useRef();
+  if ( any && !array.includes( "Any" ) ) {
+    array.unshift( "Any" );
+    backWorkArray.unshift( 1 );
+  };
+
+  const [ selected, setSelected ] = useState( "Any" );
 
   const variants = {
     open: {
@@ -21,23 +29,41 @@ const DropDown = ( { array, dropDownOpen, toggleDropDown, label = "Name:" } ) =>
   };
 
   useEffect( () => {
-    const select = document.querySelector( "div#itemNames" );
+
+    if ( backWorkArray ) {
+      setState( backWorkArray[ 0 ] );
+    } else {
+      setState( array[ 0 ] );
+    }
+
+    console.log( label, `div[name=${ label }]` );
+
+    const select = document.querySelector( `div[name=${ label }]` );
     document.onclick = e => {
-      // if ( !select.contains( e.target ) ) toggleDropDown( false );
+      // console.log( "select: ", select, "target: ", e.target );
+      // console.log()
+      if ( !select.contains( e.target ) && select != e.target ) toggleDropDown( false );
     };
+
+    // return () => {
+    //   document.onclick = null;
+    // };
   }, [] );
 
-  const ToggleDropDown = () => toggleDropDown( prev => !prev );
+  const ToggleDropDown = ( e ) => {
+    e.stopPropagation();
+    toggleDropDown( prev => !prev );
+  };
   const closeDropDown = () => toggleDropDown( false );
 
 
   return (
-    <div className={ styles[ "dropdown-container" ] } onClick={ ToggleDropDown }>
+    <div className={ styles[ "dropdown-container" ] } key={ label } name={ label } onClick={ ToggleDropDown }>
       { label && <p className={ styles[ "label" ] }>{ label }</p> }
       {/* <div className={ styles[ 'content' ] }> */ }
       <div className={ styles[ 'parent' ] }>
-        <div className={ styles[ 'select' ] } data-label={ label } name="itemNames" id="itemNames" >
-          <p className={ styles[ "default-item" ] }>{ array[ 0 ] }</p>
+        <div className={ styles[ 'select' ] } id={ label } >
+          <p className={ styles[ "default-item" ] }>{ selected }</p>
         </div>
 
         <AnimatePresence mode='wait'>
@@ -45,8 +71,17 @@ const DropDown = ( { array, dropDownOpen, toggleDropDown, label = "Name:" } ) =>
             <motion.div className={ styles[ "other-items" ] } variants={ variants } transition={ { duration: .15 } } animate="open" initial="close" exit="close" >
               { array.map( ( item, i ) => (
                 <>
-                  { i != 0 && (
+                  { item != selected && (
                     <button type='button' key={ i } onClick={ ( e ) => {
+                      e.stopPropagation();
+
+                      if ( backWorkArray ) {
+                        setState( backWorkArray[ i ] );
+                      } else {
+                        setState( array[ i ] );
+                      }
+
+                      setSelected( item );
                       closeDropDown();
                     } }>{ item }</button>
                   ) }

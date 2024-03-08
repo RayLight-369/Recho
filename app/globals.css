@@ -57,19 +57,19 @@ body {
   background: #DCDCDC;
 }
 
-/* ::-webkit-scrollbar {
-  width: 8.5px;
-  height: 5px;
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
   background: transparent;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #7cd0cc;
+  background: #a07cd0;
   border-radius: 5px;
   min-height: 30px;
 }
 
-body.lightMode {
+/* body.lightMode {
   background: var(--body-bg-light);
 } */

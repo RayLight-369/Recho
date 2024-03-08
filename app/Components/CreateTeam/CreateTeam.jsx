@@ -3,7 +3,7 @@ import styles from "./CreateTeam.module.css";
 import { MotionConfig, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useData } from '@/app/Contexts/DataContext/DataContext';
-import { set_data_after_creating_new_team } from '@/app/utils/setStates';
+import { set_data_after_creating } from '@/app/utils/setStates';
 import { navigateTo } from '@/app/utils/changePage';
 
 
@@ -56,7 +56,7 @@ const CreateTeam = ( { handleClose, type = "create" } ) => {
         const new_teamsData = DATA.userData[ 0 ].teamsData;
         console.log( "new teams Data, ", new_teamsData );
 
-        set_data_after_creating_new_team( session.user.email, setData ).then( async ( { sessionData } ) => {
+        set_data_after_creating( session.user.email, setData ).then( async ( { sessionData } ) => {
           router.prefetch( `/teams/${ DATA.data.id }/${ DATA.data.channel_ids[ 0 ][ 0 ] }` );
 
           const [ team, channel ] = navigateTo( sessionData, {
@@ -106,7 +106,7 @@ const CreateTeam = ( { handleClose, type = "create" } ) => {
         const new_teamsData = DATA.userData[ 0 ].teamsData;
         console.log( "new teams Data, ", new_teamsData );
 
-        set_data_after_creating_new_team( session.user.email, setData ).then( async ( { sessionData } ) => {
+        set_data_after_creating( session.user.email, setData ).then( async ( { sessionData } ) => {
           router.prefetch( `/teams/${ DATA.data.id }/${ DATA.data.channel_ids[ 0 ][ 0 ] }` );
 
           const [ team, channel ] = navigateTo( sessionData, {

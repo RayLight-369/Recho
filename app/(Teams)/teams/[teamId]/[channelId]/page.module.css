@@ -40,8 +40,8 @@ div.buttons {
 }
 
 div.buttons > * {
-  padding: 2px;
-  height: 27px;
+  /* padding: 2px; */
+  height: 28px;
   font-size: .7em;
   border: none;
   outline: none;
@@ -53,7 +53,7 @@ div.buttons > * {
   z-index: 1;
   position: relative;
   transition: 200ms;
-  width: 104px;
+  width: 104.5px;
 }
 
 div.buttons > button.file-btn {

@@ -112,11 +112,13 @@ div.infos {
   /* background: #888; */
   width: calc(100% - 50px);
   height: auto;
-  display: grid;
-  grid-template-rows: auto auto;
-  grid-template-columns: auto auto;
+  display: flex;
+  /* grid-template-rows: auto auto;
+  grid-template-columns: auto auto; */
   justify-content: space-between;
-  row-gap: 25px;
+  /* row-gap: 25px; */
+  gap: 25px 32px;
+  flex-flow: wrap;
 }
 
 div.due-date {
@@ -131,10 +133,15 @@ div.due-date > label {
   color: #161616;
 }
 
-div.due-date-input {
+input.due-date-input {
+  font-family: AbeeZee;
   border: none;
   outline: none;
   border-radius: 5px;
-  padding: 8px;
   background: #f9f2ff;
+  height: 32px;
+  /* width: 100px; */
+  font-size: .805rem;
+  color: #65307a;
+  padding: 0 14px;
 }

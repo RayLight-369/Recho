@@ -3,7 +3,7 @@ import styles from "./CreateChannel.module.css";
 import { MotionConfig, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useData } from '@/app/Contexts/DataContext/DataContext';
-import { set_data_after_creating_new_team } from '@/app/utils/setStates';
+import { set_data_after_creating } from '@/app/utils/setStates';
 import { navigateTo } from '@/app/utils/changePage';
 
 
@@ -56,7 +56,7 @@ const CreateChannel = ( { handleClose } ) => {
         const new_channelsData = DATA.channelData;
         console.log( "new channels Data, ", new_channelsData );
 
-        set_data_after_creating_new_team( session.user.email, setData ).then( async ( { sessionData } ) => {
+        set_data_after_creating( session.user.email, setData ).then( async ( { sessionData } ) => {
           router.prefetch( `/teams/${ currentTeam.teamID }/${ DATA.channelData.id }` );
 
           const [ team, channel ] = navigateTo( sessionData, {
