@@ -7,13 +7,19 @@ export const POST = async ( req, res ) => {
     const body = await req.json();
     const currentDate = new Date();
     console.log( "body ", JSON.stringify( body, null, 2 ) );
-    // // return;
+    const date = `${ currentDate.getDate() }-${ currentDate.toLocaleString( 'default', { month: 'long' } ).substring( 0, 3 ) } ${ currentDate.getFullYear() }`;
 
     let TaskResponse = await insertData( {
       table: "Tasks",
       object: {
         title: "Upload a Task on Recho.",
-        description: "upload a task on Recho..."
+        description: "upload a task on Recho...",
+        status: 0,
+        priority: 2,
+        due_date: date,
+        created_at: data,
+        assignee: 1,
+        reporter: 1
       }
     } );
 

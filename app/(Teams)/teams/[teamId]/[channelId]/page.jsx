@@ -139,7 +139,7 @@ const page = ( { params } ) => {
 
     if ( currentTeam && currentChannel ) {
 
-      pusherClient.subscribe( `tm=${ currentTeam.teamID }` ).bind( "channel-create", ( { name, id } ) => {
+      pusherClient.subscribe( `tm=${ currentTeam.teamID }` ).bind( "channel-create", () => {
         set_data_after_creating( data.user.email, setData, null ).then( ( { sessionData } ) => {
           navigateTo( sessionData, {
             teamId: currentTeam.teamID,
