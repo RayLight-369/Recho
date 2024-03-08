@@ -23,7 +23,7 @@ const DropDown = ( { array, dropDownOpen, toggleDropDown, label = "Name:" } ) =>
   useEffect( () => {
     const select = document.querySelector( "div#itemNames" );
     document.onclick = e => {
-      if ( !select.contains( e.target ) ) toggleDropDown( false );
+      // if ( !select.contains( e.target ) ) toggleDropDown( false );
     };
   }, [] );
 

@@ -1,6 +1,7 @@
-div.add-member {
+div.add-task {
   width: 52vw;
   height: fit-content;
+  max-height: calc(100vh - 20px);
   padding: 35px 40px;
   display: flex;
   flex-direction: column;
@@ -111,4 +112,29 @@ div.infos {
   /* background: #888; */
   width: calc(100% - 50px);
   height: auto;
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  row-gap: 25px;
+}
+
+div.due-date {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+div.due-date > label {
+  font-size: .84rem;
+  font-family: AbeeZee;
+  color: #161616;
+}
+
+div.due-date-input {
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 8px;
+  background: #f9f2ff;
 }

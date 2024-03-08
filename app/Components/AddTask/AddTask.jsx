@@ -20,7 +20,10 @@ const AddTask = ( { handleClose } ) => {
   const [ adding, setAdding ] = useState( false );
 
 
-  const [ dropDownOpen, toggleDropDown ] = useState( false );
+  const [ priorityDropDown, togglePriorityDropDown ] = useState( false );
+  const [ assigneeDropDown, toggleAssigneeDropDown ] = useState( false );
+  const [ reporterDropDown, toggleReporterDrown ] = useState( false );
+  const [ dueDateInput, toggleDueDateInput ] = useState( false );
 
 
   const buttonWhileHovering = ( scale = 1.1, duration = .1 ) => ( {
@@ -42,7 +45,7 @@ const AddTask = ( { handleClose } ) => {
 
   return (
     <MotionConfig transition={ { type: "spring", damping: 7 } } >
-      <div className={ styles[ "add-member" ] }>
+      <div className={ styles[ "add-task" ] }>
         <div className={ styles[ "header" ] }>
           <p className={ styles[ "title" ] }>Add New Task</p>
           <motion.button type='button' whileHover={ buttonWhileHovering( 1.2, .2 ) } className={ styles[ 'close' ] } onClick={ handleClose }>✖</motion.button>
@@ -52,7 +55,13 @@ const AddTask = ( { handleClose } ) => {
           <textarea placeholder='Task Description' className={ styles[ "description" ] } value={ taskDescription } onChange={ e => setDescription( e.target.value ) } />
         </div>
         <div className={ styles[ "infos" ] }>
-          <DropDown array={ [ "ray", "haha", "baha", "daha", "muaha" ] } dropDownOpen={ dropDownOpen } toggleDropDown={ toggleDropDown } />
+          <DropDown array={ [ "ray", "haha", "baha", "daha", "muaha" ] } label='Priority' dropDownOpen={ priorityDropDown } toggleDropDown={ togglePriorityDropDown } />
+          <DropDown array={ [ "ray", "haha", "baha", "daha", "muaha" ] } label='Assignee' dropDownOpen={ assigneeDropDown } toggleDropDown={ toggleAssigneeDropDown } />
+          <DropDown array={ [ "ray", "haha", "baha", "daha", "muaha" ] } label='Reporter' dropDownOpen={ reporterDropDown } toggleDropDown={ toggleReporterDrown } />
+          <div className={ styles[ "due-date" ] }>
+            <label htmlFor="dueDateInput">Due Date:</label>
+            <input type="date" name="dueDateInput" id="dueDateInput" className={ styles[ 'due-date-input' ] } />
+          </div>
         </div>
         <div className={ styles[ "buttons" ] }>
           <motion.button
