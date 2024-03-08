@@ -45,6 +45,8 @@ const AddTask = ( { handleClose } ) => {
 
   async function addTask () {
 
+    setAdding( true );
+
     const dateParts = dateInput.split( "-" );
 
     [ dateParts[ 0 ], dateParts[ 2 ] ] = [ dateParts[ 2 ], dateParts[ 0 ] ];
@@ -52,10 +54,9 @@ const AddTask = ( { handleClose } ) => {
     const due_date = dateParts.join( "-" );
 
     const ReqData = {
-      priority, reporter, assignee, due_date, title: taskTitle, description: taskDescription, currentChannel
+      priority, reporter, assignee, due_date, title: taskTitle, description: taskDescription, currentChannel, status: 0
     };
 
-    console.log( ReqData );
 
     if ( !taskTitle.trim().length ) return;
 
@@ -86,6 +87,8 @@ const AddTask = ( { handleClose } ) => {
 
     } catch ( e ) {
       console.log( e );
+    } finally {
+      setAdding( false );
     }
 
   }

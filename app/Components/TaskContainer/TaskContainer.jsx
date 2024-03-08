@@ -7,7 +7,7 @@ import Styles from "./TaskContainer.module.css";
 
 const TaskContainer = ( { className } ) => {
 
-  const { setCurrentChannelTasks, currentChannelTasks, data, dataloading } = useData();
+  const { setCurrentChannelTasks, currentChannelTasks, data, dataloading, currentTeam } = useData();
 
   useEffect( () => {
     console.log( "tasksksks: ", currentChannelTasks );
@@ -28,7 +28,7 @@ const TaskContainer = ( { className } ) => {
         <div id={ Styles[ "container" ] }>
           <AnimatePresence initial={ false }>
             { currentChannelTasks?.map( ( task ) => (
-              <Task task={ task } key={ task.id } />
+              <Task task={ task } key={ task.id } currentTeam={ currentTeam } />
             ) ) }
           </AnimatePresence>
         </div>

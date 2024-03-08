@@ -3,7 +3,10 @@ import Styles from "./Task.module.css";
 import { Reorder, motion } from 'framer-motion';
 import { PRIORITY, STATUS } from '@/app/utils/Constants';
 
-const Task = ( { task } ) => {
+const Task = ( { task, currentTeam } ) => {
+  const members = currentTeam.members;
+  const assignee = task.assignee != 1 ? members.find( member => +member.id == +task.assignee )?.name : "Any";
+  const reporter = task.reporter != 1 ? members.find( member => +member.id == +task.reporter )?.name : "Any";
 
   return (
     <Reorder.Item value={ task } as='div' className={ Styles[ "task" ] }
@@ -25,9 +28,9 @@ const Task = ( { task } ) => {
       <motion.p layout="position" className={ Styles[ "title" ] } >
         { task?.title.length > 50 ? task?.title.slice( 0, 37 ) + "..." : task?.title }
       </motion.p>
-      <motion.p layout className={ Styles[ "reporter" ] }>{ "Ray" }</motion.p>
-      <motion.p layout className={ Styles[ "date" ] }>{ "27-feb 2024" }</motion.p>
-      <motion.p layout className={ Styles[ "assignee" ] }>{ "Bay" }</motion.p>
+      <motion.p layout className={ Styles[ "reporter" ] }>{ reporter }</motion.p>
+      <motion.p layout className={ Styles[ "date" ] }>{ task.due_date }</motion.p>
+      <motion.p layout className={ Styles[ "assignee" ] }>{ assignee }</motion.p>
       <motion.p layout className={ Styles[ "priority" ] } style={ {
         color: `${ PRIORITY[ task.priority ][ 1 ] }`,
         background: `${ PRIORITY[ task.priority ][ 2 ] }`,
