@@ -42,27 +42,19 @@ const page = ( { params } ) => {
 
     const csv_data = CSV_data.join( "\n" );
 
-    // console.log( "datatatatata: ", CSV_data );
-
     const CSVFile = new Blob( [ csv_data ], {
       type: "text/csv"
     } );
 
-    // Create to temporary link to initiate
-    // download process
     const temp_link = document.createElement( 'a' );
 
-    // Download csv file
     temp_link.download = `${ currentTeam.teamName } - ${ currentChannel.name }`;
     const url = window.URL.createObjectURL( CSVFile );
     temp_link.href = url;
 
-    // This link should not be displayed
     temp_link.style.display = "none";
     document.body.appendChild( temp_link );
 
-    // Automatically click the link to
-    // trigger download
     temp_link.click();
     document.body.removeChild( temp_link );
 
@@ -117,10 +109,6 @@ const page = ( { params } ) => {
           } );
 
           if ( res.ok ) {
-
-            const body = await res.json();
-            console.log( body );
-            // setCurrentSessionTasks({currentChannel, currentChannelTasks, setCurrentChannel, setCu})
             set_data_after_creating( data.user.email, setData ).then( ( { sessionData } ) => {
               navigateTo( sessionData, {
                 teamId: currentTeam.teamID,
@@ -130,7 +118,6 @@ const page = ( { params } ) => {
                 setCurrentChannelTasks
               } );
             } );
-
           }
 
 

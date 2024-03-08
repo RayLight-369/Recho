@@ -33,6 +33,8 @@ div.task p.priority {
 div.task p.reporter {
   width: 12%;
   text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 div.task p.date {
@@ -43,4 +45,6 @@ div.task p.date {
 div.task p.assignee {
   width: 12%;
   text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
