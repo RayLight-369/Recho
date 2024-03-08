@@ -210,10 +210,7 @@ const page = ( { params } ) => {
             <div className={ Styles[ "buttons" ] }>
               {/* <button type="button" onClick={ () => openPopUp( setAddMemmberPopupOpen ) }>Add Member</button> */ }
               <button type="button" onClick={ tableToCSV }>Export to Csv</button>
-              <button type="button" className={ Styles[ 'file-btn' ] }>
-                <label htmlFor="files" className={ Styles[ "btn" ] }>Import Csv</label>
-                <input className={ Styles[ 'file-input' ] } id='files' name='files' type="file" accept='.csv' onChange={ csvToTable } />
-              </button>
+
               {
                 HIGHER_ROLES.includes(
                   data?.sessionData.currentUserData.current_user_teams_data.find(
@@ -221,6 +218,10 @@ const page = ( { params } ) => {
                   )?.role
                 ) ? (
                   <>
+                    <button type="button" className={ Styles[ 'file-btn' ] }>
+                      <label htmlFor="files" className={ Styles[ "btn" ] }>Import Csv</label>
+                      <input className={ Styles[ 'file-input' ] } id='files' name='files' type="file" accept='.csv' onChange={ csvToTable } />
+                    </button>
                     <button type="button" onClick={ () => openPopUp( setCreateChannelPopupOpen ) }>Create Channel</button>
                     <button type="button" onClick={ () => openPopUp( setAddMemmberPopupOpen ) }>Add Member</button>
                     <button type="button" onClick={ () => openPopUp( setAddTaskPopupOpen ) } id={ Styles[ 'add-task' ] }>Add Task</button>
