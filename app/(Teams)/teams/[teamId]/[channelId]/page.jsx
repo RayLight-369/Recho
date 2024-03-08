@@ -237,7 +237,10 @@ const page = ( { params } ) => {
           <TaskContainer className={ Styles[ "task-container" ] } />
         </div>
         <AnimatePresence mode='wait'>
-          <OptionBar isAdmin={ HIGHER_ROLES.includes( data?.sessionData.currentUserData.current_user_teams_data.find( team => team.id == currentTeam.teamID )?.role ) } setAddMemberPopupOpen={ setAddMemmberPopupOpen } setCreateChannelPopupOpen={ setCreateChannelPopupOpen } setAddTaskPopupOpen={ setAddTaskPopupOpen } />
+          <OptionBar exportCSV={tableToCSV} importCSV={() => {
+            const label = document.querySelector("label." + Styles[ "btn" ]);
+            label.click();
+          }} isAdmin={ HIGHER_ROLES.includes( data?.sessionData.currentUserData.current_user_teams_data.find( team => team.id == currentTeam.teamID )?.role ) } setAddMemberPopupOpen={ setAddMemmberPopupOpen } setCreateChannelPopupOpen={ setCreateChannelPopupOpen } setAddTaskPopupOpen={ setAddTaskPopupOpen } />
         </AnimatePresence>
         <AnimatePresence mode='wait'>
           { addMemmberPopupOpen && (

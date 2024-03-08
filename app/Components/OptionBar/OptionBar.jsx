@@ -3,7 +3,7 @@ import React, { memo, useState } from 'react';
 import Styles from "./OptionBar.module.css";
 
 
-const OptionBar = ( { setCreateChannelPopupOpen, setAddMemberPopupOpen, setAddTaskPopupOpen, isAdmin } ) => {
+const OptionBar = ( { setCreateChannelPopupOpen, setAddMemberPopupOpen, setAddTaskPopupOpen, isAdmin, importCSV, exportCSV } ) => {
 
   const [ openOptionBar, setOpenOptionBar ] = useState( false );
   // const [ closeOptionBarDivPosition, setCloseOptionBarDivPosition ] = useState( false );
@@ -50,16 +50,18 @@ const OptionBar = ( { setCreateChannelPopupOpen, setAddMemberPopupOpen, setAddTa
         OpenOptionBar();
       } } variants={ optionBarVariants } animate={ openOptionBar ? "animate" : "initial" } initial="initial" exit="initial">
       <motion.div className={ Styles[ "selected-num" ] }></motion.div>
-      <motion.div className={ Styles[ "minor-options" ] }>
-
+      <motion.div className={ Styles[ "minor-options" ] }></motion.div>
+      <motion.div className={ Styles[ "major-options" ] }>
+        <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ importCSV }>+ Import CSV</button>
+        { isAdmin && (
+          <>
+            <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setCreateChannelPopupOpen( true ) }>+ Create Channel</button>
+            <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setAddMemberPopupOpen( true ) }>+ Add Member</button>
+            <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setAddTaskPopupOpen( true ) }>+ Add Task</button>
+            <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ exportCSV }>+ Export CSV</button>
+          </>
+        ) }
       </motion.div>
-      { isAdmin && (
-        <motion.div className={ Styles[ "major-options" ] }>
-          <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setCreateChannelPopupOpen( true ) }>+ Create Channel</button>
-          <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setAddMemberPopupOpen( true ) }>+ Add Member</button>
-          <button type='button' className={ Styles[ 'major-options-btn' ] } onClick={ () => setAddTaskPopupOpen( true ) }>+ Add Task</button>
-        </motion.div>
-      ) }
       <motion.div className={ `${ Styles[ "optionOpenClose" ] } ${ openOptionBar ? Styles[ "opened" ] : undefined }` }
         transition={ { type: "spring", stiffness: 400, damping: 10 } }
         onClick={ ( e ) => {
