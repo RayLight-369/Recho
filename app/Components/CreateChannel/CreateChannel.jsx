@@ -12,7 +12,7 @@ const CreateChannel = ( { handleClose } ) => {
   const router = useRouter();
   const [ channelName, setChannelName ] = useState( "" );
   const [ channelDescription, setChannelDescription ] = useState( "" );
-  const { data: session, setData, setCurrentTeam, setCurrentChannel, currentTeam } = useData();
+  const { data: session, setData, setCurrentTeam, setCurrentChannel, currentTeam, setCurrentChannelTasks } = useData();
   const [ creating, setCreating ] = useState( false );
 
   const buttonWhileHovering = ( scale = 1.1, duration = .1 ) => ( {
@@ -63,7 +63,8 @@ const CreateChannel = ( { handleClose } ) => {
             teamId: currentTeam.teamID,
             channelId: DATA.channelData.id,
             setCurrentTeam,
-            setCurrentChannel
+            setCurrentChannel,
+            setCurrentChannelTasks
           } );
 
           router.push( `/teams/${ team }/${ channel }` );

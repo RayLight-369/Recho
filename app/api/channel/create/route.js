@@ -1,4 +1,5 @@
 import { getData, insertData, updateData } from "@/app/Supabase/Supabase";
+import { pusherClient, pusherServer } from "@/lib/pusher";
 
 export const POST = async ( req, res ) => {
   try {
@@ -45,6 +46,10 @@ export const POST = async ( req, res ) => {
       object: {
         channel_ids: updatedChannelIds
       }
+    } );
+
+    pusherServer.trigger( `tm=${ prevTeamRes.data[ 0 ].id }`, "channel-create", {
+      message: "A new channel found!",
     } );
 
 

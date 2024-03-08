@@ -14,6 +14,7 @@ import TaskContainer from '@/app/Components/TaskContainer/TaskContainer';
 import { HIGHER_ROLES, PRIORITY, STATUS } from '@/app/utils/Constants';
 import AddTask from '@/app/Components/AddTask/AddTask';
 import { navigateTo } from '@/app/utils/changePage';
+import { pusherClient } from '@/lib/pusher';
 
 
 
@@ -134,6 +135,29 @@ const page = ( { params } ) => {
 
   useEffect( () => {
 
+    // tm:${ prevTeamRes.data[ 0 ].id; }
+
+    if ( currentTeam && currentChannel ) {
+
+      pusherClient.subscribe( `tm=${ currentTeam.teamID }` ).bind( "channel-create", ( { name, id } ) => {
+        set_data_after_creating( data.user.email, setData, null ).then( ( { sessionData } ) => {
+          navigateTo( sessionData, {
+            teamId: currentTeam.teamID,
+            channelId: currentChannel.id,
+            setCurrentChannel,
+            setCurrentChannelTasks,
+            setCurrentTeam
+          } );
+        } );
+      } );
+
+    }
+
+  }, [ currentTeam, currentChannel ] );
+
+
+  useEffect( () => {
+
     if ( currentChannel?.id == params.channelId ) return;
 
     console.log( data );
@@ -148,7 +172,7 @@ const page = ( { params } ) => {
       } );
 
       if ( team != params.teamId || channel != params.channelId ) {
-        router.replace( `/teams/${ team }/${ channel }` );
+        router.replace( `/ teams / ${ team } / ${ channel }` );
       }
     }
   }, [ data ] );
@@ -236,4 +260,4 @@ const page = ( { params } ) => {
   };
 };
 
-export default page;
+export default page;;
