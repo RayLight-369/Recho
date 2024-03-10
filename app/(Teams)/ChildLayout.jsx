@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 
 const ChildLayout = ( { children } ) => {
 
-  const { setCurrentTeam, currentTeam, data, setData, setCurrentChannel, currentChannel } = useData();
+  const { setCurrentTeam, currentTeam, data: session, setData, setCurrentChannel, currentChannel } = useData();
   const [ createTeamPopupOpen, setCreateTeamPopupOpen ] = useState( false );
 
   let variants = {
@@ -43,13 +43,13 @@ const ChildLayout = ( { children } ) => {
       toast( `Channel #${ name } Created!` );
       // }
 
-      console.log( data );
+      console.log( `datahehehehe: `, session );
 
       console.log( `teamId is : `, teamID, ` and channel Data is : `, channelData );
 
       set_channel_data_after_new_channel( {
         newChannelData: channelData,
-        data,
+        data: session,
         setData,
         teamID,
         setCurrentTeam,
@@ -64,13 +64,13 @@ const ChildLayout = ( { children } ) => {
       toast( `A New Task Added!` );
       // }
 
-      console.log( data );
+      console.log( `datahehehehe: `, data );
 
       console.log( `[ teamId , channelID ] is : `, [ teamID, channelID ], ` and tasks Data is : `, tasksData );
 
       set_tasks_data_after_new_tasks( {
         newTasksData: tasksData,
-        data,
+        data: session,
         setData,
         teamID,
         setCurrentTeam,
