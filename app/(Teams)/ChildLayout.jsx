@@ -17,6 +17,7 @@ const ChildLayout = ( { children } ) => {
 
   const { setCurrentTeam, currentTeam, data: session, setData, setCurrentChannel, currentChannel } = useData();
   const [ createTeamPopupOpen, setCreateTeamPopupOpen ] = useState( false );
+  const [ isDataPresent, setDataPresent ] = useState( false );
 
   let variants = {
     hidden: {
@@ -37,6 +38,15 @@ const ChildLayout = ( { children } ) => {
   const closeCreateTeamPopup = useCallback( () => setCreateTeamPopupOpen( false ) );
 
   useEffect( () => {
+
+    if ( !isDataPresent && Object.keys( session ).length ) {
+      setDataPresent( true );
+    }
+
+  }, [ session, ] );
+
+  useEffect( () => {
+
 
     const handleChannelCreation = ( { name, teamID, channelData } ) => {
       // if ( currentTeam.teamID == teamID ) {
@@ -82,16 +92,20 @@ const ChildLayout = ( { children } ) => {
       } );
     };
 
-    socket.on( "channel_creation", handleChannelCreation );
-    socket.on( "task_creation", handleTasksCreation );
+
+    if ( isDataPresent ) {
+
+      socket.on( "channel_creation", handleChannelCreation );
+      socket.on( "task_creation", handleTasksCreation );
+
+    }
 
     return () => {
       socket.off( "channel_creation", handleChannelCreation );
       socket.off( "task_creation", handleTasksCreation );
     };
 
-  }, [] );
-
+  }, [ isDataPresent ] );
 
   return (
     // <AnimatePresence mode='wait'>
