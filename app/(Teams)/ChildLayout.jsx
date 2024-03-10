@@ -39,9 +39,11 @@ const ChildLayout = ( { children } ) => {
   useEffect( () => {
 
     const handleChannelCreation = ( { name, teamID, channelData } ) => {
-      if ( currentTeam.teamID == teamID ) {
-        toast( `Channel #${ name } Created!` );
-      }
+      // if ( currentTeam.teamID == teamID ) {
+      toast( `Channel #${ name } Created!` );
+      // }
+
+      console.log( data );
 
       console.log( `teamId is : `, teamID, ` and channel Data is : `, channelData );
 
@@ -58,9 +60,11 @@ const ChildLayout = ( { children } ) => {
     const handleTasksCreation = ( { teamID, channelID, tasksData } ) => {
 
       console.log( `currentteamhehehehe: `, currentTeam, ` [teamID, channelID]: `, [ teamID, channelID ], ` tasksData: `, tasksData );
-      if ( currentTeam?.teamID == teamID ) {
-        toast( `A New Task Added!` );
-      }
+      // if ( currentTeam?.teamID == teamID ) {
+      toast( `A New Task Added!` );
+      // }
+
+      console.log( data );
 
       console.log( `[ teamId , channelID ] is : `, [ teamID, channelID ], ` and tasks Data is : `, tasksData );
 
@@ -78,6 +82,7 @@ const ChildLayout = ( { children } ) => {
       } );
     };
 
+    socket.on( "channel_creation", handleChannelCreation );
     socket.on( "task_creation", handleTasksCreation );
 
     return () => {
