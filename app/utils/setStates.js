@@ -29,7 +29,7 @@ export const set_channel_data_after_new_channel = async ( { newChannelData, team
 
   const formattedChannel = newChannelData;
 
-  formattedChannel.tasks = {
+  formattedChannel.tasks = [ {
     "id": 104,
     "title": "Upload a Task on Recho.",
     "description": "upload a task on Recho...",
@@ -39,7 +39,7 @@ export const set_channel_data_after_new_channel = async ( { newChannelData, team
     "assignee": 1,
     "created_at": "8-Mar 2024",
     "due_date": "Any"
-  };
+  } ];
 
   setCurrentTeam( prev => ( {
     ...prev,
@@ -47,6 +47,58 @@ export const set_channel_data_after_new_channel = async ( { newChannelData, team
       ...prev.channels,
       formattedChannel
     ]
+  } ) );
+
+
+  //   : {
+  //       ...prev.sessionData,
+  //     teamsData: [
+  //       ...prev.sessionData.teamsData,
+  //       team
+  //     ];
+  // }
+
+  return { sessionData };
+};
+
+export const set_tasks_data_after_new_tasks = async ( { newTasksData, teamID, channelID, setData, data, setCurrentTeam, currentTeam, currentChannel, setCurrentChannel } ) => {
+
+  const team = data.sessionData.teamsData.find( team => team.teamID == teamID );
+  const channel = team.channels.find( channel => channel.id == channelID );
+  channel.tasks.push( ...newTasksData );
+
+  const sessionData = {
+    ...data.sessionData,
+    teamsData: [
+      ...data.sessionData.teamsData,
+      team
+    ]
+  };
+
+  setData( prev => ( {
+    ...prev,
+    sessionData
+  } ) );
+
+  // delete newChannelData.tasks_ids;
+
+  // const formattedChannel = newChannelData;
+
+  // formattedChannel.tasks = {
+  //   "id": 104,
+  //   "title": "Upload a Task on Recho.",
+  //   "description": "upload a task on Recho...",
+  //   "status": 0,
+  //   "priority": "2",
+  //   "reporter": 2,
+  //   "assignee": 1,
+  //   "created_at": "8-Mar 2024",
+  //   "due_date": "Any"
+  // };
+
+  setCurrentTeam( prev => ( {
+    ...prev,
+    channels: team.channels
   } ) );
 
 

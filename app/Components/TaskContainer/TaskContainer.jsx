@@ -21,7 +21,7 @@ const TaskContainer = ( { className } ) => {
         <div id={ Styles[ "headings" ] }>
           <p>Title</p>
           <p>Reporter</p>
-          <p>Created</p>
+          <p>Due</p>
           <p>Assignee</p>
           <p>Priority</p>
         </div>

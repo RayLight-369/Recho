@@ -3,10 +3,12 @@ import styles from "./AddTask.module.css";
 import { MotionConfig, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useData } from '@/app/Contexts/DataContext/DataContext';
-import { set_data_after_creating } from '@/app/utils/setStates';
+import { set_data_after_creating, set_tasks_data_after_new_tasks } from '@/app/utils/setStates';
 import { navigateTo } from '@/app/utils/changePage';
 import DropDown from '../DropDown/DropDown';
 import { PRIORITY } from '@/app/utils/Constants';
+import { socket } from '@/lib/socketio';
+import { toast } from 'react-toastify';
 
 
 const AddTask = ( { handleClose } ) => {
@@ -62,26 +64,54 @@ const AddTask = ( { handleClose } ) => {
 
     try {
 
-      const res = await fetch( "/api/task/add", {
+      const res = await toast.promise( fetch( "/api/task/add", {
         method: 'POST',
         body: JSON.stringify( ReqData ),
         headers: {
           'Content-Type': 'application/json'
         }
+      } ), {
+        success: `Task Added!`,
+        error: `Task Creation Failed!`,
+        pending: `Creating Task...`,
+      }, {
+        // autoClose: 5000,
+        bodyStyle: {
+          fontSize: ".85rem"
+        },
+
       } );
 
       if ( res.ok ) {
         const body = await res.json();
-        console.log( body );
-        set_data_after_creating( session.user.email, setData, body ).then( ( { sessionData } ) => {
+        const newTasksData = body.data;
+        const teamID = currentTeam.teamID;
+        const channelID = currentChannel.id;
+
+        console.log( `new tasks data: `, newTasksData );
+
+        socket.emit( "task_creation", { teamID, channelID, tasksData: newTasksData } );
+
+        set_tasks_data_after_new_tasks( {
+          channelID,
+          teamID,
+          data: session,
+          setData,
+          setCurrentChannel,
+          setCurrentTeam,
+          currentChannel,
+          currentTeam,
+          newTasksData: body.data
+        } ).then( ( { sessionData } ) => {
           navigateTo( sessionData, {
-            teamId: currentTeam.teamID,
-            channelId: currentChannel.id,
+            teamId: teamID,
+            channelId: channelID,
             setCurrentTeam,
             setCurrentChannel,
             setCurrentChannelTasks
           } );
         } );
+
         handleClose();
       }
 
