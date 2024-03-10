@@ -11,22 +11,11 @@ export const POST = async ( req, res ) => {
     console.log( "body ", body );
     // return;
 
-    let TaskResponse = await insertData( {
-      table: "Tasks",
-      object: {
-        title: "Upload a Task on Recho.",
-        description: "upload a task on Recho...",
-        priority: 2,
-        status: 0,
-        created_at: date
-      }
-    } );
-
     let channelResponse = await insertData( {
       table: "Channels",
       object: {
         name: "general",
-        tasks_ids: [ TaskResponse.data[ 0 ].id ],
+        tasks_ids: [ "104" ],
         created_at: date
       }
     } );

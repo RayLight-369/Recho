@@ -1,4 +1,6 @@
 import { getData, insertData, updateData } from "@/app/Supabase/Supabase";
+import { socket } from "@/lib/socketio";
+// import { pusherServer } from "@/lib/pusher";
 
 export const POST = async ( req, res ) => {
   try {
@@ -49,9 +51,14 @@ export const POST = async ( req, res ) => {
         }
       } );
 
-      return new Response( JSON.stringify( { data: TeamData, userData } ), { status: 201 } );
+
+      return new Response( JSON.stringify( { TeamData, userData } ), { status: 201 } );
 
     }
+
+    // pusherServer.trigger( `tm=${ prevTeamsData.data[ 0 ].id }`, "member-join", {
+    //   message: "A new member just joined!"
+    // } );
 
     return new Response( JSON.stringify( { error: "Team Not Found" } ), { status: 404 } );
   } catch ( e ) {

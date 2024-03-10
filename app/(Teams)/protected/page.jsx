@@ -2,6 +2,7 @@
 
 import { useData } from '@/app/Contexts/DataContext/DataContext';
 import { navigateTo } from '@/app/utils/changePage';
+import { socket } from '@/lib/socketio';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
@@ -13,6 +14,7 @@ const page = () => {
 
   useEffect( () => {
     if ( "signedIn" in data && data.signedIn ) {
+      socket.connect();
       if ( data?.sessionData.teamsData.length ) {
 
         let firstTeam = data.sessionData.teamsData[ 0 ];
@@ -23,6 +25,12 @@ const page = () => {
         const [ team, channel ] = navigateTo( data.sessionData, { teamId: firstTeam.teamID, channelId: firstChannel.id, setCurrentChannel, setCurrentTeam, setCurrentChannelTasks } );
 
         setmsg( "redirecting..." );
+
+        // socket.emit( "newConnection", {
+        //   id: data.user.id,
+        //   name: data.user.name
+        // } );
+
         router.push( `/teams/${ team }/${ channel }` );
 
       } else {

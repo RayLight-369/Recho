@@ -13,3 +13,5 @@ export const PRIORITY = [
 
 export const HIGHER_ROLES = [ "owner", "admin" ];
 export const LOWER_ROLES = [ "member", "spectator" ];
+
+export const REALTIME_URL = process.env.NEXT_PUBLIC_REALTIME_URL;

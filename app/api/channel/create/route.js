@@ -1,5 +1,5 @@
 import { getData, insertData, updateData } from "@/app/Supabase/Supabase";
-import { pusherServer } from "@/lib/pusher";
+// import { pusherServer } from "@/lib/pusher";
 
 export const POST = async ( req, res ) => {
   try {
@@ -9,25 +9,25 @@ export const POST = async ( req, res ) => {
     console.log( "body ", JSON.stringify( body, null, 2 ) );
     const date = `${ currentDate.getDate() }-${ currentDate.toLocaleString( 'default', { month: 'long' } ).substring( 0, 3 ) } ${ currentDate.getFullYear() }`;
 
-    let TaskResponse = await insertData( {
-      table: "Tasks",
-      object: {
-        title: "Upload a Task on Recho.",
-        description: "upload a task on Recho...",
-        status: 0,
-        priority: 2,
-        due_date: date,
-        created_at: date,
-        assignee: 1,
-        reporter: 1
-      }
-    } );
+    // let TaskResponse = await insertData( {
+    //   table: "Tasks",
+    //   object: {
+    //     title: "Upload a Task on Recho.",
+    //     description: "upload a task on Recho...",
+    //     status: 0,
+    //     priority: 2,
+    //     due_date: date,
+    //     created_at: date,
+    //     assignee: 1,
+    //     reporter: 1
+    //   }
+    // } );
 
     let channelResponse = await insertData( {
       table: "Channels",
       object: {
         name: body.channelName,
-        tasks_ids: [ TaskResponse.data[ 0 ].id ],
+        tasks_ids: [ "104" ],
         created_at: `${ currentDate.getDate() }-${ currentDate.toLocaleString( 'default', { month: 'long' } ).substring( 0, 3 ) } ${ currentDate.getFullYear() }`
       }
     } );
@@ -42,7 +42,7 @@ export const POST = async ( req, res ) => {
     let updatedChannelIds = prevTeamRes.data[ 0 ].channel_ids;
     updatedChannelIds.push( [ channelResponse.data[ 0 ].id.toString(), channelResponse.data[ 0 ].name ] );
 
-    console.log( "teams data prev: ", JSON.stringify( prevTeamRes.data, null, 2 ) );
+    // console.log( "teams data prev: ", JSON.stringify( prevTeamRes.data, null, 2 ) );
 
     await updateData( {
       table: "Teams",
@@ -54,9 +54,13 @@ export const POST = async ( req, res ) => {
       }
     } );
 
-    pusherServer.trigger( `tm=${ prevTeamRes.data[ 0 ].id }`, "channel-create", {
-      message: "A new channel found!",
-    } );
+    // pusherServer.trigger( `tm=${ prevTeamRes.data[ 0 ].id }`, "channel-create", {
+    //   message: "A new channel found!",
+    //   data: {
+    //     teamID: body.currentTeam.teamID,
+    //     channelID: body.channelID
+    //   }
+    // } );
 
 
     // return new Response( JSON.stringify( { msg: "wait" } ), { status: 200 } );

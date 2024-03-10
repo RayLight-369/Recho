@@ -9,6 +9,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Modal from '@/app/Components/Modal/Modal';
 import AddMember from '@/app/Components/AddMember/AddMember';
 import CreateChannel from '@/app/Components/CreateChannel/CreateChannel';
+// import { io } from 'socket.io-client';
+import { socket } from '@/lib/socketio';
 
 
 
@@ -33,6 +35,13 @@ const page = ( { params } ) => {
         setCurrentChannelTasks,
         sessionData: data.sessionData
       } );
+
+      // socket.emit( "newConnection", {
+      //   id: data.user.id,
+      //   name: data.user.name
+      // } );
+
+      // socket.connect();
 
       if ( team != params.teamId || !params?.channelId ) {
         router.replace( `/teams/${ team }/${ channel }` );

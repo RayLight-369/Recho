@@ -7,6 +7,7 @@ import CreateTeam from '../CreateTeam/CreateTeam';
 import { useData } from '@/app/Contexts/DataContext/DataContext';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { socket } from '@/lib/socketio';
 
 const Dashboard = () => {
 
@@ -29,6 +30,12 @@ const Dashboard = () => {
     if ( "signedIn" in session && !session.signedIn ) {
       console.log( session );
       signIn( "google" );
+    } else if ( session?.user ) {
+      // socket.connect();
+      socket.emit( "newConnection", {
+        id: session.user.id,
+        name: session.user.name
+      } );
     }
   }, [ session ] );
 

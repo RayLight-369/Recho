@@ -14,7 +14,9 @@ import TaskContainer from '@/app/Components/TaskContainer/TaskContainer';
 import { HIGHER_ROLES, PRIORITY, STATUS } from '@/app/utils/Constants';
 import AddTask from '@/app/Components/AddTask/AddTask';
 import { navigateTo } from '@/app/utils/changePage';
-import { pusherClient } from '@/lib/pusher';
+// import { pusherClient } from '@/lib/pusher';
+import { socket } from '@/lib/socketio';
+// import { io } from 'socket.io-client';
 
 
 
@@ -138,23 +140,27 @@ const page = ( { params } ) => {
 
     // tm:${ prevTeamRes.data[ 0 ].id; }
 
-    if ( currentTeam && currentChannel ) {
+    // if ( currentTeam ) {
+    //   const Socket = pusherClient.subscribe( `tm=${ currentTeam.teamID }` );
+    //   Socket
+    //     .bind( "member-join", ( data ) => {
+    //       console.log( `member-join: `, data );
+    //     } )
+    //     .bind( "channel-create", ( { teamID, channelID } ) => {
+    //       set_data_after_creating( data.user.email, setData, null ).then( ( { sessionData } ) => {
+    //         navigateTo( sessionData, {
+    //           teamId: teamID,
+    //           channelId: channelID,
+    //           setCurrentChannel,
+    //           setCurrentChannelTasks,
+    //           setCurrentTeam
+    //         } );
+    //       } );
+    //     } );
 
-      pusherClient.subscribe( `tm=${ currentTeam.teamID }` ).bind( "channel-create", () => {
-        set_data_after_creating( data.user.email, setData, null ).then( ( { sessionData } ) => {
-          navigateTo( sessionData, {
-            teamId: currentTeam.teamID,
-            channelId: currentChannel.id,
-            setCurrentChannel,
-            setCurrentChannelTasks,
-            setCurrentTeam
-          } );
-        } );
-      } );
+    // }
 
-    }
-
-  }, [ currentTeam, currentChannel ] );
+  }, [ currentTeam ] );
 
 
   useEffect( () => {
@@ -172,8 +178,17 @@ const page = ( { params } ) => {
         sessionData: data.sessionData
       } );
 
+      // const socket = io( "http://localhost:5261" );
+
+      // socket.emit( "newConnection", {
+      //   id: data.user.id,
+      //   name: data.user.name
+      // } );
+
+      // socket.connect();
+
       if ( team != params.teamId || channel != params.channelId ) {
-        router.replace( `/ teams / ${ team } / ${ channel }` );
+        router.replace( `/teams/${ team }/${ channel }` );
       }
     }
   }, [ data ] );
@@ -221,7 +236,7 @@ const page = ( { params } ) => {
                   <>
                     <button type="button" className={ Styles[ 'file-btn' ] }>
                       <label htmlFor="files" className={ Styles[ "btn" ] }>Import Csv</label>
-                      <input ref={inputRef} className={ Styles[ 'file-input' ] } id='files' name='files' type="file" accept='.csv' onChange={ csvToTable } />
+                      <input ref={ inputRef } className={ Styles[ 'file-input' ] } id='files' name='files' type="file" accept='.csv' onChange={ csvToTable } />
                     </button>
                     <button type="button" onClick={ () => openPopUp( setCreateChannelPopupOpen ) }>Create Channel</button>
                     <button type="button" onClick={ () => openPopUp( setAddMemmberPopupOpen ) }>Add Member</button>
@@ -238,9 +253,9 @@ const page = ( { params } ) => {
           <TaskContainer className={ Styles[ "task-container" ] } />
         </div>
         <AnimatePresence mode='wait'>
-          <OptionBar exportCSV={tableToCSV} importCSV={() => {
+          <OptionBar exportCSV={ tableToCSV } importCSV={ () => {
             inputRef.current.click();
-          }} isAdmin={ HIGHER_ROLES.includes( data?.sessionData.currentUserData.current_user_teams_data.find( team => team.id == currentTeam.teamID )?.role ) } setAddMemberPopupOpen={ setAddMemmberPopupOpen } setCreateChannelPopupOpen={ setCreateChannelPopupOpen } setAddTaskPopupOpen={ setAddTaskPopupOpen } />
+          } } isAdmin={ HIGHER_ROLES.includes( data?.sessionData.currentUserData.current_user_teams_data.find( team => team.id == currentTeam.teamID )?.role ) } setAddMemberPopupOpen={ setAddMemmberPopupOpen } setCreateChannelPopupOpen={ setCreateChannelPopupOpen } setAddTaskPopupOpen={ setAddTaskPopupOpen } />
         </AnimatePresence>
         <AnimatePresence mode='wait'>
           { addMemmberPopupOpen && (

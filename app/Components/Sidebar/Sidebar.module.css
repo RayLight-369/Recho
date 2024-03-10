@@ -32,6 +32,13 @@ div.channels {
   gap: 5px;
   position: relative;
   top: 45px;
+  height: 100%;
+  max-height: calc(100vh - 100px - 140px);
+  overflow: auto;
+}
+
+div.channels::-webkit-scrollbar-thumb {
+  background: #e5daf0;
 }
 
 div.channels > a,
@@ -43,7 +50,8 @@ div.channels > button {
   transition: 130ms;
   position: relative;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+  flex: 0;
   text-decoration: none;
   z-index: 1;
 }

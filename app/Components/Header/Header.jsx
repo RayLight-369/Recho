@@ -4,6 +4,10 @@ import { useData } from '@/app/Contexts/DataContext/DataContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
+// import { pusherClient } from '@/lib/pusher';
+import { io } from 'socket.io-client';
+import { socket } from '@/lib/socketio';
+
 
 const Header = ( { className, openPopup } ) => {
 
@@ -24,7 +28,42 @@ const Header = ( { className, openPopup } ) => {
   };
 
   useEffect( () => {
-    console.log( "teams: ", data?.sessionData?.currentUserData.current_user_teams_data );
+
+    const teams = data?.sessionData?.currentUserData.current_user_teams_data;
+    console.log( "teams: ", teams );
+
+    if ( teams?.length ) {
+      // for ( let i = 0; i < teams.length; i++ ) {
+
+      //   const channel = pusherClient.subscribe( `tm=${ teams[ i ].id }` );
+      //   channel.bind( "member-join", function ( data ) {
+      //     console.log( `member-join: `, data );
+      //   } );
+      //   console.log( `tm=${ teams[ i ].id }` );
+      // }
+
+      socket.emit( "newConnection", {
+        id: data.user.id,
+        name: data.user.name
+      } );
+
+      socket.emit( "join_teams", ( teams.map( team => ( { id: team.id, name: team.teamName } ) ) ) );
+
+      socket.on( "client_member_join", ( data ) => {
+        console.log( `new member joined : `, data.memberID );
+      } );
+
+
+      // socket.on( "connection", ( data ) => {
+      //   console.log( "socket: ", data );
+      // } );
+
+      // teams.map( team => pusherClient.subscribe( `tm=${ team.id }` ).bind( "member-join", function ( data ) {
+      //   console.log( `member-join: `, data );
+      // } ) );
+    }
+
+
     console.log( "currentTeam: ", currentTeam );
   }, [ data ] );
 
@@ -39,6 +78,17 @@ const Header = ( { className, openPopup } ) => {
     document.onclick = e => {
       if ( !select.contains( e.target ) ) toggleDropDown( false );
     };
+
+    // const socket = io( 'http://localhost:5261' );
+
+    socket.on( "client_member_presence", ( data ) => {
+      console.log( "presence" );
+      console.log( `just logged in!: `, data );
+    } );
+
+    // return () => {
+    //   socket.disconnect();
+    // };
   }, [] );
 
   const ToggleDropDown = () => toggleDropDown( prev => !prev );

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useData } from '@/app/Contexts/DataContext/DataContext';
 import { set_data_after_creating } from '@/app/utils/setStates';
 import { navigateTo } from '@/app/utils/changePage';
+import { socket } from '@/lib/socketio';
 
 
 const CreateTeam = ( { handleClose, type = "create" } ) => {
@@ -56,6 +57,7 @@ const CreateTeam = ( { handleClose, type = "create" } ) => {
         const new_teamsData = DATA.userData[ 0 ].teamsData;
         console.log( "new teams Data, ", new_teamsData );
 
+
         set_data_after_creating( session.user.email, setData ).then( async ( { sessionData } ) => {
           router.prefetch( `/teams/${ DATA.data.id }/${ DATA.data.channel_ids[ 0 ][ 0 ] }` );
 
@@ -106,12 +108,17 @@ const CreateTeam = ( { handleClose, type = "create" } ) => {
         const new_teamsData = DATA.userData[ 0 ].teamsData;
         console.log( "new teams Data, ", new_teamsData );
 
+        socket.emit( "member_join", {
+          teamID: DATA.TeamData.id,
+          memberID: DATA.userData[ 0 ].id
+        } );
+
         set_data_after_creating( session.user.email, setData ).then( async ( { sessionData } ) => {
-          router.prefetch( `/teams/${ DATA.data.id }/${ DATA.data.channel_ids[ 0 ][ 0 ] }` );
+          router.prefetch( `/teams/${ DATA.TeamData.id }/${ DATA.TeamData.channel_ids[ 0 ][ 0 ] }` );
 
           const [ team, channel ] = navigateTo( sessionData, {
-            teamId: DATA.data.id,
-            channelId: DATA.data.channel_ids[ 0 ][ 0 ],
+            teamId: DATA.TeamData.id,
+            channelId: DATA.TeamData.channel_ids[ 0 ][ 0 ],
             setCurrentTeam,
             setCurrentChannel,
             setCurrentChannelTasks

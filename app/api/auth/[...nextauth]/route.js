@@ -1,6 +1,10 @@
 import { exists, getData, getTeamsData, insertData } from "@/app/Supabase/Supabase";
+import { socket } from "@/lib/socketio";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+
+// import io from 'socket.io-client';
+// const socket = io( 'http://localhost:5261' );
 
 const handler = NextAuth( {
 
@@ -31,7 +35,14 @@ const handler = NextAuth( {
         email: session.user.email
       } );
 
-      session = { ...session, user: { ...session.user, id: sessionData.currentUserData.id }, sessionData };
+      const id = sessionData.currentUserData.id;
+
+      session = { ...session, user: { ...session.user, id }, sessionData };
+
+      // socket.emit( "newConnection", {
+      //   id,
+      //   name: session.user.name
+      // } );
 
       return session;
 
