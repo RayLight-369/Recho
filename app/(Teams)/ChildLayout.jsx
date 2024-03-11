@@ -5,7 +5,7 @@ import Sidebar from "../Components/Sidebar/Sidebar";
 import styles from "./ChildLayout.module.css";
 import Header from '../Components/Header/Header';
 import { AnimatePresence, motion } from 'framer-motion';
-import { setCurrentTeamChannel, set_channel_data_after_new_channel } from '../utils/setStates';
+import { setCurrentTeamChannel, set_channel_data_after_new_channel, set_tasks_data_after_new_tasks } from '../utils/setStates';
 import { useData } from '../Contexts/DataContext/DataContext';
 import PageWrapper from '../Components/PageWrapper/PageWrapper';
 import Modal from '../Components/Modal/Modal';
@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 
 const ChildLayout = ( { children } ) => {
 
-  const { setCurrentTeam, currentTeam, data, setData } = useData();
+  const { setCurrentTeam, currentTeam, data, setData, setCurrentChannel, currentChannel, setCurrentChannelTasks } = useData();
   const [ createTeamPopupOpen, setCreateTeamPopupOpen ] = useState( false );
 
   let variants = {
@@ -42,23 +42,53 @@ const ChildLayout = ( { children } ) => {
       toast( `Channel #${ name } Created!` );
       console.log( `teamId is : `, teamID, ` and channel Data is : `, channelData );
 
+      // if ( Object.keys( data ).length ) {
       set_channel_data_after_new_channel( {
         newChannelData: channelData,
         data,
         setData,
         teamID,
         setCurrentTeam,
+        setCurrentChannel,
+        currentChannel,
         currentTeam
       } );
+      // }
     };
 
-    socket.on( "channel_creation", handleChannelCreation );
+    const handleTasksCreation = ( { teamID, tasksData, channelID } ) => {
+      toast( `A New Task Added!` );
+      console.log( `teamId is : `, teamID, ` and channel Data is : `, tasksData );
+
+      // if ( Object.keys( data ).length ) {
+      set_tasks_data_after_new_tasks( {
+        newTasksData: tasksData,
+        teamID: teamID,
+        channelID,
+        setCurrentChannel,
+        setCurrentChannelTasks,
+        setCurrentTeam,
+        currentChannel,
+        currentTeam,
+        data,
+        setData,
+      } ).then( ( { sessionData } ) => console.log( sessionData ) );
+      // }
+    };
+
+    if ( Object.keys( data ).length ) {
+
+      socket.on( "channel_creation", handleChannelCreation );
+      socket.on( "task_creation", handleTasksCreation );
+
+    }
 
     return () => {
       socket.off( "channel_creation", handleChannelCreation );
+      socket.off( "task_creation", handleTasksCreation );
     };
 
-  }, [] );
+  }, [ data ] );
 
 
   return (

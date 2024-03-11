@@ -5,8 +5,8 @@ import { PRIORITY, STATUS } from '@/app/utils/Constants';
 
 const Task = ( { task, currentTeam } ) => {
   const members = currentTeam.members;
-  const assignee = task.assignee != 1 ? members.find( member => +member.id == +task.assignee )?.name || "Any" : "Any";
-  const reporter = task.reporter != 1 ? members.find( member => +member.id == +task.reporter )?.name || "Any" : "Any";
+  const assignee = task.assignee == 1 ? "Any" : task.assignee == 2 ? "Recho" : members.find( member => +member.id == +task.assignee )?.name || "Any";
+  const reporter = task.reporter == 1 ? "Any" : task.reporter == 2 ? "Recho" : members.find( member => +member.id == +task.reporter )?.name || "Any";
 
   return (
     <Reorder.Item value={ task } as='div' className={ Styles[ "task" ] }

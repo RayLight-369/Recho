@@ -3,10 +3,11 @@ import styles from "./AddTask.module.css";
 import { MotionConfig, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useData } from '@/app/Contexts/DataContext/DataContext';
-import { set_data_after_creating } from '@/app/utils/setStates';
+import { set_data_after_creating, set_tasks_data_after_new_tasks } from '@/app/utils/setStates';
 import { navigateTo } from '@/app/utils/changePage';
 import DropDown from '../DropDown/DropDown';
 import { PRIORITY } from '@/app/utils/Constants';
+import { toast } from 'react-toastify';
 
 
 const AddTask = ( { handleClose } ) => {
@@ -62,26 +63,50 @@ const AddTask = ( { handleClose } ) => {
 
     try {
 
-      const res = await fetch( "/api/task/add", {
+      const res = await toast.promise( fetch( "/api/task/add", {
         method: 'POST',
         body: JSON.stringify( ReqData ),
         headers: {
           'Content-Type': 'application/json'
         }
+      } ), {
+        success: `Task Added!`,
+        error: `Task Creation Failed!`,
+        pending: `Creating Task ...`,
+      }, {
+        // autoClose: 5000,
+        bodyStyle: {
+          fontSize: ".85rem"
+        },
+
       } );
 
       if ( res.ok ) {
         const body = await res.json();
         console.log( body );
-        set_data_after_creating( session.user.email, setData, body ).then( ( { sessionData } ) => {
-          navigateTo( sessionData, {
-            teamId: currentTeam.teamID,
-            channelId: currentChannel.id,
-            setCurrentTeam,
-            setCurrentChannel,
-            setCurrentChannelTasks
-          } );
+        // set_data_after_creating( session.user.email, setData, body ).then( ( { sessionData } ) => {
+        //   navigateTo( sessionData, {
+        //     teamId: currentTeam.teamID,
+        //     channelId: currentChannel.id,
+        //     setCurrentTeam,
+        //     setCurrentChannel,
+        //     setCurrentChannelTasks
+        //   } );
+        // } );
+
+        set_tasks_data_after_new_tasks( {
+          newTasksData: body.data,
+          teamID: currentTeam.teamID,
+          channelID: currentChannel.id,
+          currentChannel,
+          currentTeam,
+          data: session,
+          setCurrentChannel,
+          setCurrentChannelTasks,
+          setCurrentTeam,
+          setData
         } );
+
         handleClose();
       }
 
