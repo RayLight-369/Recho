@@ -17,7 +17,6 @@ const ChildLayout = ( { children } ) => {
 
   const { setCurrentTeam, currentTeam, data, setData, setCurrentChannel, currentChannel, setCurrentChannelTasks } = useData();
   const [ createTeamPopupOpen, setCreateTeamPopupOpen ] = useState( false );
-  const [ isDataPresent, setDataPresent ] = useState( false );
 
   let variants = {
     hidden: {
@@ -39,57 +38,20 @@ const ChildLayout = ( { children } ) => {
 
   useEffect( () => {
 
-    if ( !isDataPresent && Object.keys( session ).length ) {
-      setDataPresent( true );
-    }
-
-  }, [ session, ] );
-
-  useEffect( () => {
-
-
     const handleChannelCreation = ( { name, teamID, channelData } ) => {
-      // if ( currentTeam.teamID == teamID ) {
       toast( `Channel #${ name } Created!` );
-      // }
-
-      console.log( `datahehehehe: `, session );
-
       console.log( `teamId is : `, teamID, ` and channel Data is : `, channelData );
 
       // if ( Object.keys( data ).length ) {
       set_channel_data_after_new_channel( {
         newChannelData: channelData,
-        data: session,
+        data,
         setData,
         teamID,
         setCurrentTeam,
-        currentTeam,
-      } );
-    };
-
-    const handleTasksCreation = ( { teamID, channelID, tasksData } ) => {
-
-      console.log( `currentteamhehehehe: `, currentTeam, ` [teamID, channelID]: `, [ teamID, channelID ], ` tasksData: `, tasksData );
-      // if ( currentTeam?.teamID == teamID ) {
-      toast( `A New Task Added!` );
-      // }
-
-      console.log( `datahehehehe: `, data );
-
-      console.log( `[ teamId , channelID ] is : `, [ teamID, channelID ], ` and tasks Data is : `, tasksData );
-
-      set_tasks_data_after_new_tasks( {
-        newTasksData: tasksData,
-        data: session,
-        setData,
-        teamID,
-        setCurrentTeam,
-        // currentTeam,
-        channelID,
         setCurrentChannel,
-        currentTeam,
-        currentChannel
+        currentChannel,
+        currentTeam
       } );
       // }
     };
@@ -116,20 +78,17 @@ const ChildLayout = ( { children } ) => {
 
     if ( Object.keys( data ).length ) {
 
+      socket.on( "channel_creation", handleChannelCreation );
+      socket.on( "task_creation", handleTasksCreation );
 
-      if ( isDataPresent ) {
+    }
 
-        socket.on( "channel_creation", handleChannelCreation );
-        socket.on( "task_creation", handleTasksCreation );
+    return () => {
+      socket.off( "channel_creation", handleChannelCreation );
+      socket.off( "task_creation", handleTasksCreation );
+    };
 
-      }
-
-      return () => {
-        socket.off( "channel_creation", handleChannelCreation );
-        socket.off( "task_creation", handleTasksCreation );
-      };
-
-    }, [ data ] );
+  }, [ data ] );
 
 
   return (

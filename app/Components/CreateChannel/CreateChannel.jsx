@@ -86,7 +86,7 @@ const CreateChannel = ( { handleClose } ) => {
         //   // progress: 1,
         // } );
 
-        set_channel_data_after_new_channel( { newChannelData: new_channelsData, teamID: currentTeamID, data: session, setData, currentTeam, setCurrentTeam } ).then( async ( { sessionData } ) => {
+        set_channel_data_after_new_channel( { newChannelData: new_channelsData, teamID: currentTeamID, data: session, setData, currentTeam, setCurrentTeam, } ).then( async ( { sessionData } ) => {
           router.prefetch( `/teams/${ currentTeamID }/${ DATA.channelData.id }` );
 
           const [ team, channel ] = navigateTo( sessionData, {
@@ -94,7 +94,8 @@ const CreateChannel = ( { handleClose } ) => {
             channelId: DATA.channelData.id,
             setCurrentTeam,
             setCurrentChannel,
-            setCurrentChannelTasks
+            setCurrentChannelTasks,
+
           } );
 
           router.push( `/teams/${ team }/${ channel }` );
