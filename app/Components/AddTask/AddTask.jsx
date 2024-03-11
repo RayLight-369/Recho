@@ -7,6 +7,7 @@ import { set_data_after_creating, set_tasks_data_after_new_tasks } from '@/app/u
 import { navigateTo } from '@/app/utils/changePage';
 import DropDown from '../DropDown/DropDown';
 import { PRIORITY } from '@/app/utils/Constants';
+import { socket } from '@/lib/socketio';
 import { toast } from 'react-toastify';
 
 
@@ -72,7 +73,7 @@ const AddTask = ( { handleClose } ) => {
       } ), {
         success: `Task Added!`,
         error: `Task Creation Failed!`,
-        pending: `Creating Task ...`,
+        pending: `Creating Task...`,
       }, {
         // autoClose: 5000,
         bodyStyle: {
@@ -83,28 +84,32 @@ const AddTask = ( { handleClose } ) => {
 
       if ( res.ok ) {
         const body = await res.json();
-        console.log( body );
-        // set_data_after_creating( session.user.email, setData, body ).then( ( { sessionData } ) => {
-        //   navigateTo( sessionData, {
-        //     teamId: currentTeam.teamID,
-        //     channelId: currentChannel.id,
-        //     setCurrentTeam,
-        //     setCurrentChannel,
-        //     setCurrentChannelTasks
-        //   } );
-        // } );
+        const newTasksData = body.data;
+        const teamID = currentTeam.teamID;
+        const channelID = currentChannel.id;
+
+        console.log( `new tasks data: `, newTasksData );
+
+        socket.emit( "task_creation", { teamID, channelID, tasksData: newTasksData } );
 
         set_tasks_data_after_new_tasks( {
-          newTasksData: body.data,
-          teamID: currentTeam.teamID,
-          channelID: currentChannel.id,
+          channelID,
+          teamID,
+          data: session,
+          setData,
+          setCurrentChannel,
+          setCurrentTeam,
           currentChannel,
           currentTeam,
-          data: session,
-          setCurrentChannel,
-          setCurrentChannelTasks,
-          setCurrentTeam,
-          setData
+          newTasksData: body.data
+        } ).then( ( { sessionData } ) => {
+          navigateTo( sessionData, {
+            teamId: teamID,
+            channelId: channelID,
+            setCurrentTeam,
+            setCurrentChannel,
+            setCurrentChannelTasks
+          } );
         } );
 
         handleClose();
